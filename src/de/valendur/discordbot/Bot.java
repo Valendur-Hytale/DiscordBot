@@ -50,7 +50,7 @@ public class Bot extends ListenerAdapter {
 	//public static HashMap<String, String> emoteToRole = new HashMap<String, String>();
 	
 	 public static void main(String[] args ) {
-		 parseConfig();
+		// parseConfig();
 	        try {
 	        	
 	            jda = new JDABuilder(Config.BOT_TOKEN)
