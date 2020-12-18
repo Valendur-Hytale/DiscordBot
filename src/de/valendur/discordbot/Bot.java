@@ -13,9 +13,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.security.auth.login.LoginException;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -38,9 +35,7 @@ public class Bot extends ListenerAdapter {
 	
 	public static JDA jda;
 	
-	public static String BOT_TOKEN;
-	public static String GUILD_ID;
-	public static String MESSAGE_ID;
+	
 	
 	public static String USER_ID;
 	
@@ -58,7 +53,7 @@ public class Bot extends ListenerAdapter {
 		 parseConfig();
 	        try {
 	        	
-	            jda = new JDABuilder(BOT_TOKEN)
+	            jda = new JDABuilder(Config.BOT_TOKEN)
 	                    .addEventListeners(new Bot())  
 	                    .build();
 	            jda.awaitReady(); 
@@ -82,7 +77,7 @@ public class Bot extends ListenerAdapter {
 	 
 	 
 	 public static void migrateRoles() throws InterruptedException {
-		 Guild guild = jda.getGuildById(GUILD_ID);
+		 Guild guild = jda.getGuildById(Config.GUILD_ID);
 		 
 		 for (Member member : guild.getMembers()) {
 			 System.out.println(member.getEffectiveName());
@@ -176,7 +171,7 @@ public class Bot extends ListenerAdapter {
 	 
 	 @Override
 	 public void onGuildMemberJoin(GuildMemberJoinEvent e) {
-		 Guild guild = jda.getGuildById(GUILD_ID);
+		 Guild guild = jda.getGuildById(Config.GUILD_ID);
 		 
 		 for (String role : rolesOnJoin) {
 			 guild.addRoleToMember(e.getMember(), guild.getRoleById(role)).queue();
@@ -188,7 +183,7 @@ public class Bot extends ListenerAdapter {
 	 public void onPrivateMessageReceived(PrivateMessageReceivedEvent e) {
 		 if (!e.getAuthor().getId().equals(USER_ID)) {return;}
 		 
-		 e.getChannel().sendMessage(parseConfig()).queue();
+		 e.getChannel().sendMessage(Config.parseConfig()).queue();
 		 try {
 			reactToMessage();
 		} catch (InterruptedException | ExecutionException e1) {
@@ -278,7 +273,7 @@ public class Bot extends ListenerAdapter {
 		 
 	 }
 	 
-	 public static String parseConfig() {
+	 /*public static String parseConfig() {
 		 JSONParser parser = new JSONParser();
 			try {
 				Object obj = parser.parse(new FileReader("config.json"));
@@ -303,13 +298,13 @@ public class Bot extends ListenerAdapter {
 				for (Object object : emoteRoleArray) {
 					JSONObject emoteRole = (JSONObject) object;
 					emoteToRole.put((String) emoteRole.get("EMOTE_ID"), (String) emoteRole.get("ROLE_ID"));
-				}*/
+				}
 				
 				JSONArray joinRoleArray = (JSONArray) config.get("JOIN_ROLES");
 				for (Object object : joinRoleArray) {
 					String role = (String) object;
 					rolesOnJoin.add(role);
-				}
+				}//
 				
 				
 				JSONArray messagesArray = (JSONArray) config.get("MESSAGES");
@@ -351,6 +346,6 @@ public class Bot extends ListenerAdapter {
 			}
 			
 		return "Reloaded!";
-	 }
+	 }*/
 
 }
