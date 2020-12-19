@@ -11,6 +11,7 @@ public class PingCommand extends Command{
 	@Override
 	public void execute(GuildMessageReceivedEvent e, String commandParams){
 		e.getChannel().sendMessage("Pong!").queue();
+		e.getChannel().sendMessage("Hilfe").queue();
 	}
 
 }

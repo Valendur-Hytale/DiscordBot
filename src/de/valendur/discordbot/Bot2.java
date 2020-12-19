@@ -38,7 +38,7 @@ public class Bot2 extends ListenerAdapter {
 	//public static HashMap<String, String> emoteToRole = new HashMap<String, String>();
 	
 	 public static void main(String[] args ) {
-		// parseConfig();
+		 Config.parseConfig();
 		 commandHandler = new CommandHandler(Config.COMMAND_PREFIX);
 		 commandHandler.addCommand(new PingCommand("ping"));
 		 
@@ -47,7 +47,8 @@ public class Bot2 extends ListenerAdapter {
 	            jda = new JDABuilder(Config.BOT_TOKEN)
 	                    .addEventListeners(commandHandler)
 	                    .build();
-	            jda.awaitReady(); 
+	            jda.awaitReady();
+	            System.out.println("Erfolgreich gestartet !");
 
 	            
 	        }

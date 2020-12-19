@@ -44,7 +44,7 @@ public class Config {
 		 config = new JSONObject(configString);
 		 
 		 BOT_TOKEN = config.getString("BOT_TOKEN");
-		 GUILD_ID = config.getString("GUILD_ID");
+/*		 GUILD_ID = config.getString("GUILD_ID");
 		 MIGRATE = (boolean) config.get("MIGRATE");
 		 RELOAD_ROLES = (List<String>) config.getJSONArray("ROLE_ALLOWED_TO_RELOAD").toList();
 		 
