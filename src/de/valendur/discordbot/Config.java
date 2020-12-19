@@ -21,6 +21,7 @@ public class Config {
 	
 	public static String BOT_TOKEN;
 	public static String GUILD_ID;
+	public static String COMMAND_PREFIX;
 	public static String MESSAGE_ID;
 	public static boolean MIGRATE;
 	public static List<String> RELOAD_ROLES;
