@@ -22,6 +22,7 @@ public class Config {
 	public static String BOT_TOKEN;
 	public static String GUILD_ID;
 	public static String COMMAND_PREFIX;
+	public static String SECURITY_CHANNEL;
 	public static String MESSAGE_ID;
 	public static boolean MIGRATE;
 	public static List<String> RELOAD_ROLES;
@@ -44,6 +45,8 @@ public class Config {
 		 config = new JSONObject(configString);
 		 
 		 BOT_TOKEN = config.getString("BOT_TOKEN");
+		 COMMAND_PREFIX = config.getString("COMMAND_PREFIX");
+		 SECURITY_CHANNEL = config.getString("SECURITY_CHANNEL");
 /*		 GUILD_ID = config.getString("GUILD_ID");
 		 MIGRATE = (boolean) config.get("MIGRATE");
 		 RELOAD_ROLES = (List<String>) config.getJSONArray("ROLE_ALLOWED_TO_RELOAD").toList();

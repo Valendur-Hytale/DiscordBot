@@ -1,33 +1,13 @@
 package de.valendur.discordbot;
 
-import java.io.FileReader;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-
 import javax.security.auth.login.LoginException;
 
 import de.valendur.discordbot.commands.PingCommand;
+import de.valendur.discordbot.commands.ReloadCommand;
 import de.valendur.discordbot.handlers.CommandHandler;
+import de.valendur.discordbot.security.MessageSecurity;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageReaction;
-import net.dv8tion.jda.api.entities.MessageReaction.ReactionEmote;
-import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
-import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
-import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class Bot2 extends ListenerAdapter {
@@ -41,11 +21,13 @@ public class Bot2 extends ListenerAdapter {
 		 Config.parseConfig();
 		 commandHandler = new CommandHandler(Config.COMMAND_PREFIX);
 		 commandHandler.addCommand(new PingCommand("ping"));
+		 commandHandler.addCommand(new ReloadCommand("reload"));
 		 
 	        try {
 	        	
-	            jda = new JDABuilder(Config.BOT_TOKEN)
+	            jda = JDABuilder.createDefault(Config.BOT_TOKEN)
 	                    .addEventListeners(commandHandler)
+	                    .addEventListeners(new MessageSecurity())
 	                    .build();
 	            jda.awaitReady();
 	            System.out.println("Erfolgreich gestartet !");

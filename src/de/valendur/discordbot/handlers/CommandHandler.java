@@ -3,6 +3,7 @@ package de.valendur.discordbot.handlers;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.valendur.discordbot.Config;
 import de.valendur.discordbot.commands.Command;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -35,6 +36,7 @@ public class CommandHandler extends ListenerAdapter {
 	
 	@Override
 	public void onGuildMessageReceived(GuildMessageReceivedEvent e) {
+		prefix = Config.COMMAND_PREFIX;
 		Message message = e.getMessage();
 		String content = message.getContentRaw();
 		
