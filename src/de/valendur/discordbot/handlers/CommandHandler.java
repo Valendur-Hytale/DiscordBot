@@ -1,4 +1,4 @@
-package de.valendur.discordbot;
+package de.valendur.discordbot.handlers;
 
 import java.util.ArrayList;
 import java.util.List;
