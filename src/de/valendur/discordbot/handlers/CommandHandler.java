@@ -31,7 +31,10 @@ public class CommandHandler extends ListenerAdapter {
 		}
 	}
 	
-	public void onGuildMessageReceivedEvent(GuildMessageReceivedEvent e) {
+	
+	
+	@Override
+	public void onGuildMessageReceived(GuildMessageReceivedEvent e) {
 		Message message = e.getMessage();
 		String content = message.getContentRaw();
 		
