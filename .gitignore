@@ -3,7 +3,7 @@
 
 # Log file
 *.log
-config.json
+token.json
 
 # BlueJ files
 *.ctxt

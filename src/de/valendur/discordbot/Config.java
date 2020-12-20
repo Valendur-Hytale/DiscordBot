@@ -17,6 +17,7 @@ import kong.unirest.json.JSONObject;
 public class Config {
 	
 	private static final String config_file = "config.json";
+	private static final String tokenFile = "token.json";
 	private static JSONObject config;
 	
 	public static String BOT_TOKEN;
@@ -44,7 +45,7 @@ public class Config {
 		 
 		 config = new JSONObject(configString);
 		 
-		 BOT_TOKEN = config.getString("BOT_TOKEN");
+		 BOT_TOKEN = readToken(); //config.getString("BOT_TOKEN");
 		 COMMAND_PREFIX = config.getString("COMMAND_PREFIX");
 		 SECURITY_CHANNEL = config.getString("SECURITY_CHANNEL");
 /*		 GUILD_ID = config.getString("GUILD_ID");
@@ -131,6 +132,15 @@ public class Config {
 	public static String getConfig() {
 		try {
 			return new String(Files.readAllBytes(Paths.get(config_file)));
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static String readToken() {
+		try {
+			 return new JSONObject( new String(Files.readAllBytes(Paths.get(tokenFile)))).getString("BOT_TOKEN");
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
