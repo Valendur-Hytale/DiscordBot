@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import de.valendur.discordbot.reactionrole.ReactionMessage;
 import kong.unirest.json.JSONObject;
 
 
@@ -20,6 +21,8 @@ public class Config {
 	private static final String tokenFile = "token.json";
 	private static JSONObject config;
 	
+	
+	//BASIC
 	public static String BOT_TOKEN;
 	public static String GUILD_ID;
 	public static String COMMAND_PREFIX;
@@ -29,6 +32,7 @@ public class Config {
 	public static List<String> RELOAD_ROLES;
 	
 	//ROLE MANAGEMENT
+	public static List<ReactionMessage> REACTION_MESSAGES = new ArrayList<ReactionMessage>();
 	
 	public static List<String> rolesOnJoin = new ArrayList<String>(); 
 	public static LinkedHashMap<String, LinkedHashMap<String, String>> messageEmoteRole = new LinkedHashMap<String, LinkedHashMap<String,String>>();
