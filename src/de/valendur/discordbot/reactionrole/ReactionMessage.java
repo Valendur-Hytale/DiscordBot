@@ -54,7 +54,12 @@ public class ReactionMessage {
 		for (MessageReaction reaction : message.getReactions()) {
 			final String emoteString = getIDfromReaction(reaction);
 			if (!emotes.contains(emoteString)) {
-				message.clearReactions(emoteString).queue();
+				if (reaction.getReactionEmote().isEmoji()) {
+					message.clearReactions(reaction.getReactionEmote().getEmoji()).queue();
+				} else {
+					message.clearReactions(reaction.getReactionEmote().getEmote()).queue();
+				}
+				
 			}
 		}
 		
