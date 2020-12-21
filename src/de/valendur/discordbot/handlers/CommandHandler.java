@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.valendur.discordbot.Config;
-import de.valendur.discordbot.commands.Command;
+import de.valendur.discordbot.commands.GenericCommand;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class CommandHandler extends ListenerAdapter {
 
-	List<Command> commands = new ArrayList<Command>();
+	List<GenericCommand> commands = new ArrayList<GenericCommand>();
 	
 	private String prefix;
 	
@@ -20,14 +20,14 @@ public class CommandHandler extends ListenerAdapter {
 		this.prefix = prefix;
 	}
 	
-	public CommandHandler(String prefix, Command command) {
+	public CommandHandler(String prefix, GenericCommand command) {
 		this.prefix = prefix;
 		addCommand(command);
 	}
 	
-	public CommandHandler(String prefix, Command[] commands) {
+	public CommandHandler(String prefix, GenericCommand[] commands) {
 		this.prefix = prefix;
-		for (Command command : commands) {
+		for (GenericCommand command : commands) {
 			addCommand(command);
 		}
 	}
@@ -47,7 +47,7 @@ public class CommandHandler extends ListenerAdapter {
 		String commandText = commandMessage.split(" ")[0];
 		String commandParams = commandMessage.replaceFirst(commandText + " ", "");
 		
-		for (Command command : commands) {
+		for (GenericCommand command : commands) {
 			if (command.getCommandText().equalsIgnoreCase(commandText)) {
 				command.execute(e, commandParams);
 			}
@@ -57,7 +57,7 @@ public class CommandHandler extends ListenerAdapter {
 	
 	
 	
-	public void addCommand(Command command) {
+	public void addCommand(GenericCommand command) {
 		commands.add(command);
 	}
 }

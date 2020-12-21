@@ -1,6 +1,8 @@
 package de.valendur.discordbot.handlers;
 
-import de.valendur.discordbot.Config;
+import de.valendur.discordbot.Bot2;
+import de.valendur.discordbot.configs.ConfigType;
+import de.valendur.discordbot.configs.ReactionRoleConfig;
 import de.valendur.discordbot.reactionrole.ReactionMessage;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
@@ -15,7 +17,7 @@ public class ReactionRoleHandler extends ListenerAdapter {
 		if (e.retrieveUser().complete().isBot()) {
 			return;
 		} 
-		for (ReactionMessage reactionMessage : Config.REACTION_MESSAGES) {
+		for (final ReactionMessage reactionMessage : getConfig().getReactionMessages()) {
 			if (reactionMessage.getMessageID().equalsIgnoreCase(e.getMessageId())) {
 				reactionMessage.addedReaction(e.retrieveMember().complete(), e.getReaction());
 			}
@@ -27,17 +29,20 @@ public class ReactionRoleHandler extends ListenerAdapter {
 		if (e.retrieveUser().complete().isBot()) {
 			return;
 		} 
-		for (ReactionMessage reactionMessage : Config.REACTION_MESSAGES) {
+		for (final ReactionMessage reactionMessage : getConfig().getReactionMessages()) {
 			if (reactionMessage.getMessageID().equalsIgnoreCase(e.getMessageId())) {
 				reactionMessage.removedReaction(e.retrieveMember().complete(), e.getReaction());
 			}
 		}
 	}
 	
-	
 	public void setup(Guild guild) {
-		for (ReactionMessage reactionMessage : Config.REACTION_MESSAGES) {
+		for (final ReactionMessage reactionMessage : getConfig().getReactionMessages()) {
 			reactionMessage.setup(guild);
 		}
+	}
+	
+	public ReactionRoleConfig getConfig() {
+		return (ReactionRoleConfig) Bot2.configHandler.getConfig(ConfigType.REACTION_ROLE_CONFIG);
 	}
 }

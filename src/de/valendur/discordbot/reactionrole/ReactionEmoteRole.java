@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.User;
 
 public class ReactionEmoteRole {
 	

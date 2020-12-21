@@ -2,25 +2,16 @@ package de.valendur.discordbot.commands;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-public abstract class Command {
+public abstract class GenericCommand {
 
 	
 	private String commandText;
 	
-	
-	public Command(String commandText) {
+	public GenericCommand(String commandText) {
 		this.commandText = commandText;
 	}
 	
-	
-	
-	public void execute(GuildMessageReceivedEvent e, String commandParams){
-	}
-	
-	
-	
-	
-	
+	public abstract void execute(GuildMessageReceivedEvent e, String commandParams);
 	
 	public String getCommandText() {
 		return commandText;

@@ -2,7 +2,7 @@ package de.valendur.discordbot.commands;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-public class PingCommand extends Command{
+public class PingCommand extends GenericCommand{
 
 	public PingCommand(String commandText) {
 		super(commandText);

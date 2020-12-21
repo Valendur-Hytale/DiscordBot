@@ -5,6 +5,7 @@ import javax.security.auth.login.LoginException;
 import de.valendur.discordbot.commands.PingCommand;
 import de.valendur.discordbot.commands.ReloadCommand;
 import de.valendur.discordbot.handlers.CommandHandler;
+import de.valendur.discordbot.handlers.ConfigHandler;
 import de.valendur.discordbot.security.MessageSecurity;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -14,6 +15,7 @@ public class Bot2 extends ListenerAdapter {
 	
 	public static JDA jda;
 	public static CommandHandler commandHandler;
+	public static ConfigHandler configHandler;
 	
 	//public static HashMap<String, String> emoteToRole = new HashMap<String, String>();
 	
