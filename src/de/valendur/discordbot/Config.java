@@ -41,17 +41,17 @@ public class Config {
 	
 	@SuppressWarnings("unchecked")
 	public static String parseConfig() {
-		 String configString = getConfig();
+		//String configString = getConfig();
 		 
-		 if (configString == null) {
+		 /*if (configString == null) {
 			 return "Failed to read config";
 		 }
-		 
-		 config = new JSONObject(configString);
+		 */
+		 //config = new JSONObject(configString);
 		 
 		 BOT_TOKEN = readToken(); //config.getString("BOT_TOKEN");
-		 COMMAND_PREFIX = config.getString("COMMAND_PREFIX");
-		 SECURITY_CHANNEL = config.getString("SECURITY_CHANNEL");
+		// COMMAND_PREFIX = config.getString("COMMAND_PREFIX");
+		 //SECURITY_CHANNEL = config.getString("SECURITY_CHANNEL");
 /*		 GUILD_ID = config.getString("GUILD_ID");
 		 MIGRATE = (boolean) config.get("MIGRATE");
 		 RELOAD_ROLES = (List<String>) config.getJSONArray("ROLE_ALLOWED_TO_RELOAD").toList();

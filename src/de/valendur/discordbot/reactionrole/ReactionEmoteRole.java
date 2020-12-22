@@ -40,13 +40,13 @@ public class ReactionEmoteRole {
 	
 	public void addedReaction(Member member) {
 		for (String roleID : roles) {
-			member.getGuild().addRoleToMember(member, member.getGuild().getRoleById(roleID));
+			member.getGuild().addRoleToMember(member, member.getGuild().getRoleById(roleID)).queue();
 		} 
 	}
 	
 	public void removedReaction(Member member) {
 		for (String roleID : roles) {
-			member.getGuild().removeRoleFromMember(member, member.getGuild().getRoleById(roleID));
+			member.getGuild().removeRoleFromMember(member, member.getGuild().getRoleById(roleID)).queue();;
 		} 
 	}
 }

@@ -1,0 +1,18 @@
+{
+  "MESSAGES": [
+    {
+      "__comment": "Kommentar wich Post",
+      "CHANNEL_ID": "790554460753231872",
+      "MESSAGE_ID": "790601795704586270",
+      "EMOTE_ROLES": [
+        {
+          "__comment": "Wich role",
+          "EMOTE_ID": "✅",
+          "ROLE_IDS": [
+            "790602257707827220"
+          ]
+        }
+      ]
+    }
+  ]
+}
