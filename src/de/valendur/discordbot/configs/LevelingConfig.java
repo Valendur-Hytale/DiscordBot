@@ -23,7 +23,6 @@ public class LevelingConfig extends GenericConfig {
 		for (int i = 0; i < messages.length(); i++) {
 			JSONObject message = messages.getJSONObject(i);
 			
-			}
 			
 		}
 	}
