@@ -6,6 +6,7 @@ import de.valendur.discordbot.commands.PingCommand;
 import de.valendur.discordbot.commands.ReloadCommand;
 import de.valendur.discordbot.configs.BaseConfig;
 import de.valendur.discordbot.configs.ConfigType;
+import de.valendur.discordbot.configs.LevelingConfig;
 import de.valendur.discordbot.configs.ReactionEmoteRoleConfig;
 import de.valendur.discordbot.handlers.CommandHandler;
 import de.valendur.discordbot.handlers.ConfigHandler;
@@ -27,6 +28,7 @@ public class Bot2 extends ListenerAdapter {
 	 public static void main(String[] args ) {
 		 Config.parseConfig();
 		 initHandlers();
+		 initConfigs();
 		 
 	        try {
 	        	
@@ -69,7 +71,7 @@ public class Bot2 extends ListenerAdapter {
 		 configHandler = new ConfigHandler();
 		 configHandler.addConfig(new BaseConfig(ConfigType.BASE_CONFIG));
 		 configHandler.addConfig(new ReactionEmoteRoleConfig(ConfigType.REACTION_ROLE_CONFIG));
-		 
+		 configHandler.addConfig(new LevelingConfig(ConfigType.LEVELING_CONFIG));
 		 
 		 configHandler.load();
 	 }

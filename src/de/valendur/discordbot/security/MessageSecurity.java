@@ -1,6 +1,9 @@
 package de.valendur.discordbot.security;
 
+import de.valendur.discordbot.Bot2;
 import de.valendur.discordbot.Config;
+import de.valendur.discordbot.configs.ConfigType;
+import de.valendur.discordbot.configs.SecurityConfig;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageDeleteEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -11,23 +14,28 @@ public class MessageSecurity extends ListenerAdapter {
 
 	@Override
 	public void onGuildMessageDelete(GuildMessageDeleteEvent e) {
-		TextChannel channel = (TextChannel) e.getGuild().getGuildChannelById(Config.SECURITY_CHANNEL);
+		TextChannel channel = (TextChannel) e.getGuild().getGuildChannelById(getConfig().SECURITY_CHANNEL);
 		
-		channel.sendMessage("Nachricht gelöscht.").queue();
+		channel.sendMessage("Nachricht gelï¿½scht.").queue();
 	}
 
 	@Override
 	public void onGuildMessageReceived(GuildMessageReceivedEvent e) {
-		TextChannel channel = (TextChannel) e.getGuild().getGuildChannelById(Config.SECURITY_CHANNEL);
+		TextChannel channel = (TextChannel) e.getGuild().getGuildChannelById(getConfig().SECURITY_CHANNEL);
 		
 		channel.sendMessage("Neue Nachricht.").queue();
 	}
 
 	@Override
 	public void onGuildMessageUpdate(GuildMessageUpdateEvent e) {
-		TextChannel channel = (TextChannel) e.getGuild().getGuildChannelById(Config.SECURITY_CHANNEL);
+		TextChannel channel = (TextChannel) e.getGuild().getGuildChannelById(getConfig().SECURITY_CHANNEL);
 		
 		channel.sendMessage("Nachricht bearbeitet.").queue();
+	}
+	
+	
+	private SecurityConfig getConfig() {
+		return (SecurityConfig) Bot2.configHandler.getConfig(ConfigType.SECURITY_CONFIG);
 	}
 	
 	
