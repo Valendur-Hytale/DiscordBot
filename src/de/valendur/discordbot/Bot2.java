@@ -8,6 +8,8 @@ import de.valendur.discordbot.configs.BaseConfig;
 import de.valendur.discordbot.configs.ConfigType;
 import de.valendur.discordbot.configs.LevelingConfig;
 import de.valendur.discordbot.configs.ReactionEmoteRoleConfig;
+import de.valendur.discordbot.configs.SecurityConfig;
+import de.valendur.discordbot.configs.TokenConfig;
 import de.valendur.discordbot.handlers.CommandHandler;
 import de.valendur.discordbot.handlers.ConfigHandler;
 import de.valendur.discordbot.handlers.ReactionEmoteRoleHandler;
@@ -32,7 +34,7 @@ public class Bot2 extends ListenerAdapter {
 		 
 	        try {
 	        	
-	            jda = JDABuilder.createDefault(Config.BOT_TOKEN)
+	            jda = JDABuilder.createDefault(getTokenConfig().BOT_TOKEN)
 	                    .addEventListeners(commandHandler)
 	                    .addEventListeners(new MessageSecurity())
 	                    .addEventListeners(reactionEmoteRoleHandler)
@@ -53,7 +55,13 @@ public class Bot2 extends ListenerAdapter {
 	        setupHandlers();
 	    }
 	 
+	 public static BaseConfig getBaseConfig() {
+		 return (BaseConfig) configHandler.getConfig(ConfigType.BASE_CONFIG);
+	 }
 	 
+	 public static TokenConfig getTokenConfig() {
+		 return (TokenConfig) configHandler.getConfig(ConfigType.TOKEN_CONFIG);
+	 }
 	 
 	 public static void initHandlers() {
 		 initConfigs();
@@ -72,6 +80,8 @@ public class Bot2 extends ListenerAdapter {
 		 configHandler.addConfig(new BaseConfig(ConfigType.BASE_CONFIG));
 		 configHandler.addConfig(new ReactionEmoteRoleConfig(ConfigType.REACTION_ROLE_CONFIG));
 		 configHandler.addConfig(new LevelingConfig(ConfigType.LEVELING_CONFIG));
+		 configHandler.addConfig(new SecurityConfig(ConfigType.SECURITY_CONFIG));
+		 configHandler.addConfig(new TokenConfig(ConfigType.TOKEN_CONFIG));
 		 
 		 configHandler.load();
 	 }

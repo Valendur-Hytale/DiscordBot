@@ -1,15 +1,21 @@
 package de.valendur.discordbot.handlers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.valendur.discordbot.Bot2;
 import de.valendur.discordbot.configs.ConfigType;
-import de.valendur.discordbot.configs.ReactionEmoteRoleConfig;
-import de.valendur.discordbot.reactionrole.ReactionMessage;
+import de.valendur.discordbot.configs.LevelingConfig;
+import de.valendur.discordbot.levelling.LevelingUser;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class LevelingHandler extends ListenerAdapter {
+	
+	List<LevelingUser> levelingUser = new ArrayList<LevelingUser>();
 
 	
 	@Override
@@ -17,33 +23,40 @@ public class LevelingHandler extends ListenerAdapter {
 		if (e.retrieveUser().complete().isBot()) {
 			return;
 		} 
-		for (final ReactionMessage reactionMessage : getConfig().getReactionMessages()) {
-			if (reactionMessage.getMessageID().equalsIgnoreCase(e.getMessageId())) {
-				reactionMessage.addedReaction(e.retrieveMember().complete(), e.getReaction());
-			}
-		}
+
 	}
 	
 	@Override
 	public void onMessageReactionRemove(MessageReactionRemoveEvent e) {	
-		if (e.retrieveUser().complete().isBot()) {
-			return;
-		} 
-		for (final ReactionMessage reactionMessage : getConfig().getReactionMessages()) {
-			if (reactionMessage.getMessageID().equalsIgnoreCase(e.getMessageId())) {
-				reactionMessage.removedReaction(e.retrieveMember().complete(), e.getReaction());
+
+	}
+	
+	
+	
+	
+	@Override
+	public void onGuildMessageReceived(GuildMessageReceivedEvent e) {
+		System.out.println("MemberId: " + e.getMember().getIdLong() + " UserId: " + e.getAuthor().getIdLong());
+	}
+
+	public void setup(Guild guild) {
+	}
+	
+	public LevelingConfig getConfig() {
+		return (LevelingConfig) Bot2.configHandler.getConfig(ConfigType.LEVELING_CONFIG);
+	}
+	
+	
+	private void userSendMessage(long id) {
+		for (LevelingUser user : levelingUser) {
+			if (id == user.getId()) {
+				user.addMessage();
 			}
 		}
-	}
-	
-	public void setup(Guild guild) {
-		for (final ReactionMessage reactionMessage : getConfig().getReactionMessages()) {
-			System.out.println("One reaction emssage");
-			reactionMessage.setup(guild);
-		}
-	}
-	
-	public ReactionEmoteRoleConfig getConfig() {
-		return (ReactionEmoteRoleConfig) Bot2.configHandler.getConfig(ConfigType.LEVELING_CONFIG);
+		
+		LevelingUser user = new LevelingUser();
+		user.addMessage();
+		
+		levelingUser.add(user);
 	}
 }

@@ -27,7 +27,7 @@ public class ConfigHandler {
 				return config;
 			}
 		}
-		throw new IllegalArgumentException("There is a shitty coder among us");
+		throw new IllegalArgumentException("There is a shitty coder among us who cant define configs");
 	}
 	
 }

@@ -5,7 +5,8 @@ import javax.annotation.Nullable;
 public enum ConfigType {
 	REACTION_ROLE_CONFIG("Reaction Role Config", "reactionrole.json"),
     BASE_CONFIG("Basis Config", "config.json"),
-    LEVELING_CONFIG("Level Config", "level.json"),
+    TOKEN_CONFIG("Token Config", "token.json"),
+    LEVELING_CONFIG("Level Config", "levelling.json"),
     SECURITY_CONFIG("Security Config", "security.json");
 
     private String name;

@@ -1,0 +1,23 @@
+{
+	"MESSAGE_DELAY": 3000,
+	"SPECIAL_MESSAGES_QUANTITIES": [{
+		"QUANTITY" : 1,
+		"EXP" : 15 
+	}, {
+		"QUANTITY" : 100,
+		"EXP" : 200 
+	}],
+	"MESSAGE_EXP_BY_LENGTH": [{
+		"LENGTH" : 10,
+		"MIN_EXP" : 5, 
+		"MAX_EXP" : 15
+	}, {
+		"LENGTH" : 150,
+		"MIN_EXP" : 10, 
+		"MAX_EXP" : 30
+	}, {
+		"LENGTH" : 99999,
+		"MIN_EXP" : 20, 
+		"MAX_EXP" : 60
+	}]
+}
