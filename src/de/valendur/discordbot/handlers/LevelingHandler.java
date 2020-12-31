@@ -47,15 +47,15 @@ public class LevelingHandler extends ListenerAdapter {
 	}
 	
 	
-	private void userSendMessage(long id) {
+	private void userSendMessage(long id, int length) {
 		for (LevelingUser user : levelingUser) {
 			if (id == user.getId()) {
-				user.addMessage();
+				user.addMessage(length);
 			}
 		}
 		
 		LevelingUser user = new LevelingUser();
-		user.addMessage();
+		user.addMessage(length);
 		
 		levelingUser.add(user);
 	}

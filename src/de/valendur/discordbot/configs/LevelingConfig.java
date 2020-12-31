@@ -4,6 +4,7 @@ package de.valendur.discordbot.configs;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.valendur.discordbot.BotLogger;
 import de.valendur.discordbot.levelling.MessageLengthExp;
 import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
@@ -37,6 +38,18 @@ public class LevelingConfig extends GenericConfig {
 			JSONObject messageExpByLength = messagesExpByLength.getJSONObject(i);
 			MESSAGE_EXP_BY_LENGTH.add(new MessageLengthExp(messageExpByLength.getInt("LENGTH"), messageExpByLength.getInt("MIN_EXP"), messageExpByLength.getInt("MAX_EXP")));
 		}
+	}
+	
+	
+	public int getExpByMessageLength(final int length) {
+		for (MessageLengthExp messageLengthExp : MESSAGE_EXP_BY_LENGTH) {
+			if (length <= messageLengthExp.getLength()) {
+				return messageLengthExp.getExp();
+			}
+		}
+		
+		BotLogger.warning("Message length exp leveling config is fucked up");
+		return -1;
 	}
 	
 }

@@ -17,10 +17,18 @@ public class LevelingUser {
 		return memberId;
 	}
 	
-	public boolean addMessage() {
+	public boolean addMessage(int length) {
 		final LevelingConfig config = getConfig();
 		
 		messageCount += 1;
+		final long currentTime = System.currentTimeMillis();
+		
+		if (lastMessage + config.MESSAGE_DELAY < currentTime) {
+			lastMessage = currentTime;
+			
+			
+			backendAddExp(config.getExpByMessageLength(length));
+		}
 		
 		
 		
