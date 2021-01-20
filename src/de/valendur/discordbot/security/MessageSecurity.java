@@ -21,6 +21,7 @@ public class MessageSecurity extends ListenerAdapter {
 
 	@Override
 	public void onGuildMessageReceived(GuildMessageReceivedEvent e) {
+		if (e.getAuthor().isBot()) return;
 		TextChannel channel = (TextChannel) e.getGuild().getGuildChannelById(getConfig().SECURITY_CHANNEL);
 		
 		channel.sendMessage("Neue Nachricht.").queue();

@@ -7,6 +7,7 @@ public enum ConfigType {
     BASE_CONFIG("Basis Config", "config.json"),
     TOKEN_CONFIG("Token Config", "token.json"),
     LEVELING_CONFIG("Level Config", "levelling.json"),
+    DB_CONFIG("Backend Config", "db.json"),
     SECURITY_CONFIG("Security Config", "security.json");
 
     private String name;

@@ -11,9 +11,11 @@ import kong.unirest.json.JSONObject;
 
 public class LevelingConfig extends GenericConfig {
 
-	public String COMMAND_PREFIX;
+	public String LEVELING_ANNOUNCEMENT_CHANNEL;
+	
 	
 	public int MESSAGE_DELAY;
+
 	public HashMap<Integer, Integer> SPECIAL_MESSAGE_QUANTITIES = new HashMap<Integer, Integer>();
 	public ArrayList<MessageLengthExp> MESSAGE_EXP_BY_LENGTH = new ArrayList<MessageLengthExp>();
 	
@@ -26,6 +28,7 @@ public class LevelingConfig extends GenericConfig {
 		JSONObject config = readConfig();
 		
 		MESSAGE_DELAY = config.getInt("MESSAGE_DELAY");
+		LEVELING_ANNOUNCEMENT_CHANNEL = config.getString("LEVELING_ANNOUNCEMENT_CHANNEL");
 		
 		JSONArray specialMessageQuantities = config.getJSONArray("SPECIAL_MESSAGES_QUANTITIES");
 		for (int i = 0; i < specialMessageQuantities.length(); i++) {
