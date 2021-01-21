@@ -29,6 +29,8 @@ public class LevelingUser {
 		messageCount += 1;
 		final long currentTime = System.currentTimeMillis();
 		
+		System.out.println(lastMessage + config.MESSAGE_DELAY + "/" + currentTime);
+		
 		if (lastMessage + config.MESSAGE_DELAY < currentTime) {
 			lastMessage = currentTime;
 			

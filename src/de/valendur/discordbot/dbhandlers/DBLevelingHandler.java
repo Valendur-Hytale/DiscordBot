@@ -17,8 +17,9 @@ public class DBLevelingHandler {
 		json.put("userID", ""+id);
 		json.put("exp", exp);
 		Unirest.post("members/addExp").body(json).asJsonAsync(response -> {
+			System.out.println(response.getBody().getObject().toString());
 			JSONObject user = response.getBody().getObject();
-			if (user.optBoolean("levelUp")) {
+			if (user.getBoolean("levelUp")) {
 				LevelingHandler.announcementUserLevelUp(user);
 			}
 		});
