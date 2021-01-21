@@ -43,7 +43,8 @@ public class LevelingHandler extends ListenerAdapter {
 	public void onGuildMessageReceived(GuildMessageReceivedEvent e) {
 		if (e.getAuthor().isBot()) return;
 		if (e.getMessage().getContentRaw().startsWith(Bot2.getBaseConfig().COMMAND_PREFIX)) return;
-		System.out.println("MemberId: " + e.getMember().getIdLong() + " UserId: " + e.getAuthor().getIdLong());
+		//System.out.println("MemberId: " + e.getMember().getIdLong() + " UserId: " + e.getAuthor().getIdLong());
+		System.out.println("Received Message by: " + e.getMember().getIdLong());
 		userSendMessage(e.getMember().getIdLong(), e.getMessage().getContentDisplay().length());
 	}
 
@@ -66,6 +67,7 @@ public class LevelingHandler extends ListenerAdapter {
 		for (LevelingUser user : levelingUsers) {
 			if (id == user.getId()) {
 				user.addMessage(length);
+				return;
 			}
 		}
 		

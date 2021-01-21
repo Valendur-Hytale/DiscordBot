@@ -12,10 +12,11 @@ public class DBLevelingHandler {
 	
 	
 	
-	public static void addExpToUser(long id, int exp) {
+	public static void addExpToUser(long id, int exp, boolean message) {
 		JSONObject json = new JSONObject();
 		json.put("userID", ""+id);
 		json.put("exp", exp);
+		json.put("message", message);
 		Unirest.post("members/addExp").body(json).asJsonAsync(response -> {
 			System.out.println(response.getBody().getObject().toString());
 			JSONObject user = response.getBody().getObject();
@@ -23,8 +24,8 @@ public class DBLevelingHandler {
 				LevelingHandler.announcementUserLevelUp(user);
 			}
 		});
-		
 	}
+	
 	
 	
 	public static JSONObject getUser(long id) {

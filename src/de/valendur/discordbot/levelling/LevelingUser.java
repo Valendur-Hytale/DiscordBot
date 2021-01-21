@@ -48,7 +48,7 @@ public class LevelingUser {
 	
 	
 	private void backendAddExp(int exp) {
-		DBLevelingHandler.addExpToUser(memberId, exp);
+		DBLevelingHandler.addExpToUser(memberId, exp, true);
 	}
 
 	
