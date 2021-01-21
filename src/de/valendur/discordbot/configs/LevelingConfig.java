@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.valendur.discordbot.BotLogger;
+import de.valendur.discordbot.handlers.RandomHandler;
 import de.valendur.discordbot.levelling.MessageLengthExp;
 import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
@@ -14,8 +15,9 @@ public class LevelingConfig extends GenericConfig {
 	public String LEVELING_ANNOUNCEMENT_CHANNEL;
 	
 	
+	public int REACTION_DELAY, REACTION_XP_MIN, REACTION_XP_MAX;
+	
 	public int MESSAGE_DELAY;
-
 	public HashMap<Integer, Integer> SPECIAL_MESSAGE_QUANTITIES = new HashMap<Integer, Integer>();
 	public ArrayList<MessageLengthExp> MESSAGE_EXP_BY_LENGTH = new ArrayList<MessageLengthExp>();
 	
@@ -26,6 +28,10 @@ public class LevelingConfig extends GenericConfig {
 	@Override
 	public void load() {
 		JSONObject config = readConfig();
+		
+		REACTION_DELAY = config.getInt("REACTION_DELAY");
+		REACTION_XP_MIN = config.getInt("REACTION_XP_MIN");
+		REACTION_XP_MAX = config.getInt("REACTION_XP_MAX");
 		
 		MESSAGE_DELAY = config.getInt("MESSAGE_DELAY");
 		LEVELING_ANNOUNCEMENT_CHANNEL = config.getString("LEVELING_ANNOUNCEMENT_CHANNEL");
@@ -53,6 +59,10 @@ public class LevelingConfig extends GenericConfig {
 		
 		BotLogger.warning("Message length exp leveling config is fucked up");
 		return -1;
+	}
+	
+	public int getExpByReaction() {
+		return RandomHandler.randInt(REACTION_XP_MIN, REACTION_XP_MAX);
 	}
 	
 }

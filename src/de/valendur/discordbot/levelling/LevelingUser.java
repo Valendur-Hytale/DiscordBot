@@ -10,7 +10,6 @@ public class LevelingUser {
 	private long lastReaction, lastMessage;
 	private long memberId;
 	
-	private int messageCount;
 	
 	public LevelingUser(long id) {
 		this.memberId = id;
@@ -26,29 +25,29 @@ public class LevelingUser {
 	public boolean addMessage(int length) {
 		final LevelingConfig config = getConfig();
 		
-		messageCount += 1;
 		final long currentTime = System.currentTimeMillis();
-		
-		System.out.println(lastMessage + config.MESSAGE_DELAY + "/" + currentTime);
-		
 		if (lastMessage + config.MESSAGE_DELAY < currentTime) {
 			lastMessage = currentTime;
-			
-			System.out.println("should add exp");
 			backendAddExp(config.getExpByMessageLength(length));
 		}
-		
-		
-		
-		
-		
 		
 		return false; // TODO Return based on backend levelup response
 	}
 	
+	public void addReact() {
+		final LevelingConfig config = getConfig();
+		
+		final long currentTime = System.currentTimeMillis();
+		
+		if (lastReaction + config.REACTION_DELAY < currentTime) {
+			lastMessage = currentTime;
+			backendAddExp(config.getExpByReaction());
+		}
+	}
+	
 	
 	private void backendAddExp(int exp) {
-		DBLevelingHandler.addExpToUser(memberId, exp, true);
+		DBLevelingHandler.addExpToUser(memberId, exp, false);
 	}
 
 	
