@@ -1,6 +1,7 @@
 package de.valendur.discordbot.handlers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.valendur.discordbot.Bot2;
@@ -21,8 +22,10 @@ import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class LevelingHandler extends ListenerAdapter {
+	
+	HashMap<Long,LevelingUser> levelingUsers = new HashMap<Long,LevelingUser>();
 
-	List<LevelingUser> levelingUsers = new ArrayList<LevelingUser>();
+	//List<LevelingUser> levelingUsers = new ArrayList<LevelingUser>();
 
 	@Override
 	public void onMessageReactionAdd(MessageReactionAddEvent e) {
@@ -62,7 +65,7 @@ public class LevelingHandler extends ListenerAdapter {
 		 * for (JSONObject user : (List<JSONObject>) json.toList()) {
 		 * levelingUsers.add(new LevelingUser()); }
 		 */
-
+		levelingUsers.clear();
 	}
 
 	public static LevelingConfig getConfig() {
@@ -70,31 +73,26 @@ public class LevelingHandler extends ListenerAdapter {
 	}
 
 	private void userSendMessage(long id, int length) {
-		for (LevelingUser user : levelingUsers) {
-			if (id == user.getId()) {
-				user.addMessage(length);
-				return;
-			}
+		LevelingUser user = levelingUsers.get(id);
+		if (user == null) {
+			user = new LevelingUser(id);
+			user.addMessage(length);
+			levelingUsers.put(id, user);
+			return;
 		}
-
-		LevelingUser user = new LevelingUser(id);
 		user.addMessage(length);
 
-		levelingUsers.add(user);
 	}
 
 	private void userReactedToMessage(long id) {
-		for (LevelingUser user : levelingUsers) {
-			if (id == user.getId()) {
-				user.addReact();
-				return;
-			}
+		LevelingUser user = levelingUsers.get(id);
+		if (user == null) {
+			user = new LevelingUser(id);
+			user.addReact();
+			levelingUsers.put(id, user);
+			return;
 		}
-
-		LevelingUser user = new LevelingUser(id);
 		user.addReact();
-
-		levelingUsers.add(user);
 	}
 
 	public static void announcementUserLevelUp(JSONObject user) {

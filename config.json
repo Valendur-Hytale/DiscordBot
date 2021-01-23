@@ -1,5 +1,12 @@
 {
 	"COMMAND_PREFIX" : "!",
 	"BACKEND_LINK" : "http://localhost:4000/",
-	"ERROR_CHANNEL" : "801531673249579068" 
+	"ERROR_CHANNEL" : "801531673249579068",
+	"SCHEDULER": {
+		"LEVELING_RESET" : {
+			"HOUR" : 2,
+			"MINUTE" : 59,
+			"SECOND" : 59
+		}
+	}
 }

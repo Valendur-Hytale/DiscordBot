@@ -61,6 +61,10 @@ public class LevelingConfig extends GenericConfig {
 		return -1;
 	}
 	
+	public int getExpByMessageCount(final int messageCount) {
+		return SPECIAL_MESSAGE_QUANTITIES.getOrDefault(messageCount, 0);
+	}
+	
 	public int getExpByReaction() {
 		return RandomHandler.randInt(REACTION_XP_MIN, REACTION_XP_MAX);
 	}

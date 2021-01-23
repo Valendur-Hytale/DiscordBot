@@ -1,5 +1,10 @@
 package de.valendur.discordbot;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.security.auth.login.LoginException;
 
 import de.valendur.discordbot.commands.EXPCommand;
@@ -17,9 +22,9 @@ import de.valendur.discordbot.handlers.ConfigHandler;
 import de.valendur.discordbot.handlers.LevelingHandler;
 import de.valendur.discordbot.handlers.ReactionEmoteRoleHandler;
 import de.valendur.discordbot.security.MessageSecurity;
+import de.valendur.discordbot.tasks.DailyLevelingResetTask;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
-import kong.unirest.json.JSONObject;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Guild;
@@ -32,6 +37,7 @@ public class Bot2 extends ListenerAdapter {
 	public static ConfigHandler configHandler;
 	public static ReactionEmoteRoleHandler reactionEmoteRoleHandler;
 	public static LevelingHandler levelingHandler;
+	public static HashSet<Object> taskExecutors = new HashSet<Object>();
 	
 	//public static HashMap<String, String> emoteToRole = new HashMap<String, String>();
 	
@@ -44,6 +50,7 @@ public class Bot2 extends ListenerAdapter {
 		 initHandlers();
 		 initConfigs();
 		 initUnirest();
+		 initExecutors();
 		 
 		 
 	        try {
@@ -108,8 +115,20 @@ public class Bot2 extends ListenerAdapter {
 		 configHandler.load();
 	 }
 	 
+	 public static void initExecutors() {
+		 final ScheduledTaskExecutor dailyReset = new ScheduledTaskExecutor(new DailyLevelingResetTask(getBaseConfig().SCHEDULING_LEVELING_RESET_HOUR, 
+				 																	getBaseConfig().SCHEDULING_LEVELING_RESET_MINUTE, 
+				 																	getBaseConfig().SCHEDULING_LEVELING_RESET_SECOND));
+		 
+		 
+		 
+		 
+		 taskExecutors.add(dailyReset);
+	 }
+	 
+	 
 	 public static void setupHandlers() {
-		 reactionEmoteRoleHandler.setup(jda.getGuilds().get(0));
+		 reactionEmoteRoleHandler.setup(getGuild());
 	 }
 	 
 	 public static void initUnirest() {

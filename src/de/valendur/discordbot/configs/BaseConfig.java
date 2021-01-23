@@ -8,6 +8,8 @@ public class BaseConfig extends GenericConfig {
 	public String BACKEND_LINK;
 	public String ERROR_CHANNEL;
 	
+	public int SCHEDULING_LEVELING_RESET_HOUR, SCHEDULING_LEVELING_RESET_MINUTE, SCHEDULING_LEVELING_RESET_SECOND;
+	
 	public BaseConfig(ConfigType type) {
 		super(type);
 	}
@@ -19,10 +21,13 @@ public class BaseConfig extends GenericConfig {
 		BACKEND_LINK = config.getString("BACKEND_LINK");
 		ERROR_CHANNEL = config.getString("ERROR_CHANNEL");
 		
+		JSONObject SCHEDULING_LEVELING_RESET = config.getJSONObject("SCHEDULER").getJSONObject("LEVELING_RESET");
+		SCHEDULING_LEVELING_RESET_HOUR = SCHEDULING_LEVELING_RESET.getInt("HOUR");
+		SCHEDULING_LEVELING_RESET_MINUTE = SCHEDULING_LEVELING_RESET.getInt("MINUTE");
+		SCHEDULING_LEVELING_RESET_SECOND = SCHEDULING_LEVELING_RESET.getInt("SECOND");
+		
 		
 	}
-	
-	
 	
 
 }
