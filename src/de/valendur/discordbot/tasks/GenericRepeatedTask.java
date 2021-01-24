@@ -4,7 +4,7 @@ public abstract class GenericRepeatedTask {
 
 	private int seconds;
 	
-	public GenericRepeatedTask(int hour, int minute, int seconds) {
+	public GenericRepeatedTask(int seconds) {
 		this.seconds = seconds;
 	}
 	

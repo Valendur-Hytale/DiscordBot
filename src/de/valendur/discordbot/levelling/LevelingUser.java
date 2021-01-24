@@ -1,5 +1,7 @@
 package de.valendur.discordbot.levelling;
 
+import java.util.concurrent.TimeUnit;
+
 import de.valendur.discordbot.Bot2;
 import de.valendur.discordbot.configs.ConfigType;
 import de.valendur.discordbot.configs.LevelingConfig;
@@ -12,6 +14,9 @@ public class LevelingUser {
 	
 	private int messageCount;
 	
+	private boolean inVoice;
+	private long inVoiceSince;
+	
 	
 	public LevelingUser(long id) {
 		this.memberId = id;
@@ -23,6 +28,17 @@ public class LevelingUser {
 	
 	public long getId() {
 		return memberId;
+	}
+	
+	public void setVoiceState(boolean inVoice) {
+		this.inVoice = inVoice;
+		if (inVoice) {
+			inVoiceSince = System.currentTimeMillis();
+		}
+	}
+	
+	public boolean isInVoice() {
+		return inVoice;
 	}
 	
 	public boolean addMessage(final int length) {
@@ -44,6 +60,12 @@ public class LevelingUser {
 		}
 		
 		return false; // TODO Return based on backend levelup response
+	}
+	
+	public void voiceCheck() {
+		if (inVoice) {
+			backendAddExp(getConfig().getExpByVoiceTime((int) TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - inVoiceSince)));
+		}
 	}
 	
 	public void addReact() {

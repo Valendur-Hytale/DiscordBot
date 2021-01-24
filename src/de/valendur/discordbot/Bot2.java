@@ -23,6 +23,7 @@ import de.valendur.discordbot.handlers.LevelingHandler;
 import de.valendur.discordbot.handlers.ReactionEmoteRoleHandler;
 import de.valendur.discordbot.security.MessageSecurity;
 import de.valendur.discordbot.tasks.DailyLevelingResetTask;
+import de.valendur.discordbot.tasks.VoiceCheckTask;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import net.dv8tion.jda.api.JDA;
@@ -33,20 +34,16 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 public class Bot2 extends ListenerAdapter {
 	
 	public static JDA jda;
+	
 	public static CommandHandler commandHandler;
 	public static ConfigHandler configHandler;
 	public static ReactionEmoteRoleHandler reactionEmoteRoleHandler;
 	public static LevelingHandler levelingHandler;
-	public static HashSet<Object> taskExecutors = new HashSet<Object>();
 	
-	//public static HashMap<String, String> emoteToRole = new HashMap<String, String>();
+	public static HashSet<Object> taskExecutors = new HashSet<Object>();
 	
 	 @SuppressWarnings("deprecation")
 	public static void main(String[] args ) {
-		 
-		 
-		 
-		 Config.parseConfig();
 		 initHandlers();
 		 initConfigs();
 		 initUnirest();
@@ -120,10 +117,11 @@ public class Bot2 extends ListenerAdapter {
 				 																	getBaseConfig().SCHEDULING_LEVELING_RESET_MINUTE, 
 				 																	getBaseConfig().SCHEDULING_LEVELING_RESET_SECOND));
 		 
-		 
+		 final RepeatedTaskExecutor voiceCheck = new RepeatedTaskExecutor(new VoiceCheckTask(getBaseConfig().SCHEDULING_VOICE_CHECK));
 		 
 		 
 		 taskExecutors.add(dailyReset);
+		 taskExecutors.add(voiceCheck);
 	 }
 	 
 	 

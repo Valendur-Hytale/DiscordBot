@@ -7,6 +7,7 @@
 			"HOUR" : 2,
 			"MINUTE" : 59,
 			"SECOND" : 59
-		}
+		},
+		"VOICE_CHECK_EVERY_SECONDS" : 60
 	}
 }
