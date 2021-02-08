@@ -139,22 +139,6 @@ public class EXPCommand extends GenericCommand{
 		return bufferedImageToByteArray(image);
 	}
 	
-	private File generateImage() {
-		BufferedImage image = readFile();
-		
-		Graphics2D g = image.createGraphics();
-		g.setColor(new Color(255,0,0));
-		g.fillRoundRect(252, 830, 1412, 38, 38, 38);
-		g.dispose();
-		
-		File file = new File("temp_" + RandomHandler.randInt(0, 100000) + ".png");
-		
-		writeBufferedImage(image, file);
-		return file;
-		
-		
-	}
-	
 	private BufferedImage makeRoundedCorner(BufferedImage image, int cornerRadius) {
 	    int w = image.getWidth();
 	    int h = image.getHeight();
@@ -182,19 +166,6 @@ public class EXPCommand extends GenericCommand{
 	    return output;
 	}
 	
-	private Message generateBufferedImage(String text, TextChannel channel) {
-		BufferedImage image = readFile();
-		
-		Graphics2D g = image.createGraphics();
-		g.setColor(new Color(255,0,0));
-		g.fillRoundRect(252, 830, 1412, 38, 38, 38);
-		g.dispose();
-		
-		
-		return Utils.sendImage(channel.getGuild(), channel, image, text);
-		
-		
-	}
 	
 	
 	private BufferedImage readFile() {
@@ -244,17 +215,7 @@ public class EXPCommand extends GenericCommand{
 		}
 		return array;
 		
-	}
-	
-	private void writeBufferedImage(final BufferedImage image, File file) {
-		try {
-			ImageIO.write(image, "png", file);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
+	}	
 	
 	
 }
