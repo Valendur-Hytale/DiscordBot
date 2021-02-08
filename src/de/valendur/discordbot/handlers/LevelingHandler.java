@@ -116,7 +116,8 @@ public class LevelingHandler extends ListenerAdapter {
 	
 
 	public static void announcementUserLevelUp(JSONObject user) {
-		Bot2.getGuild().getTextChannelById(getConfig().LEVELING_ANNOUNCEMENT_CHANNEL).sendMessage(user.toString())
-				.queue();
+		Bot2.getGuild().getTextChannelById(getConfig().LEVELING_ANNOUNCEMENT_CHANNEL)
+			.sendMessage("Herzlichen Glückwunsch <@" + user.getString("userID") + ">! Du bist zu Level " + user.getString("currentLevel") + " aufgestiegen!")
+			.queue();
 	}
 }

@@ -56,7 +56,7 @@ public class LevelingConfig extends GenericConfig {
 		JSONArray voicesExpByTime = config.getJSONArray("VOICE_EXP_BY_TIME");
 		for (int i = 0; i < voicesExpByTime.length(); i++) {
 			JSONObject voiceExpByTime = voicesExpByTime.getJSONObject(i);
-			MESSAGE_EXP_BY_LENGTH.add(new MessageLengthExp(voiceExpByTime.getInt("TIME"),
+			VOICE_EXP_BY_TIME.add(new VoiceTimeExp(voiceExpByTime.getInt("TIME_IN_MINUTES"),
 															voiceExpByTime.getInt("MIN_EXP"), 
 															voiceExpByTime.getInt("MAX_EXP")));
 		}
