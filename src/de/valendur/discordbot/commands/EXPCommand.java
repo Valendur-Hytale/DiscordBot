@@ -65,11 +65,33 @@ public class EXPCommand extends GenericCommand{
 		System.out.println("toArray duration: " + toArray.toMillis());
 		System.out.println("sending duration: " + sending.toMillis());*/
 		
-		JSONObject user = DBLevelingHandler.getUser(e.getMember().getIdLong());
+		Member member;
+		
+		System.out.println("Command params: " + commandParams);
+		if (commandParams.startsWith("<@")) {
+			commandParams = commandParams.replace("<@", "");
+			commandParams = commandParams.replace("!", "");
+			commandParams = commandParams.replace(">", "");
+			System.out.println("user id " + commandParams);
+			long id = Long.parseLong(commandParams);
+			member = e.getGuild().retrieveMemberById(id).complete();
+		} else {
+			//id = e.getMember().getIdLong();
+			member = e.getMember();
+		}
+		
+		/*if (commandParams.split(" ") != null && commandParams.split(" ").length == 2) {
+			String commandParam = commandParams.split(" ")[1];
+			commandParam = commandParam.substring(2, commandParam.length() - 1);
+			System.out.println("user id: " + commandParam);
+		}*/
+		
+		JSONObject user = DBLevelingHandler.getUser(member.getIdLong());
 		
 		
 		
-		e.getChannel().sendMessage("<@" + e.getMember().getId() + ">").addFile(generateImageBytes(e.getMember(), user), "profileCard.png").queue();
+		//e.getChannel().sendMessage("<@" + e.getMember().getId() + ">").addFile(generateImageBytes(member, user), "profileCard.png").queue();
+		e.getChannel().sendFile(generateImageBytes(member, user), "profileCard.png").queue();
 	}
 	
 	
@@ -81,19 +103,24 @@ public class EXPCommand extends GenericCommand{
 		        			RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
 		
 		
+		
 		BufferedImage profilePic = readImage(member.getUser().getEffectiveAvatarUrl());
+		
 		
 		
 		g.drawImage(makeRoundedCorner(profilePic, 375), 261, 221, 375, 375, null);
 		
 		g.setColor(Color.WHITE);
 		
+		Font rankFont = new Font("Arial Black", Font.PLAIN, 115);
 		Font bigFont = new Font("Arial Black", Font.PLAIN, 75);
 		Font middleFont = new Font("Arial Black", Font.PLAIN, 57);
 		Font smallFont = new Font("Arial Black", Font.PLAIN, 40);
 		
 		g.setFont(bigFont);
+		g.setColor(member.getColor());
 		g.drawString(member.getEffectiveName(), 720, 280);
+		g.setColor(Color.WHITE);
 		g.setFont(smallFont);
 		g.drawString(member.getUser().getAsTag(), 720, 340);
 		
@@ -111,14 +138,14 @@ public class EXPCommand extends GenericCommand{
 		
 		
 		g.setFont(smallFont);
-		g.drawString("Rank", 1320, 470);
+		g.drawString("Rank", 1340, 460);
 		//FontMetrics fm = g.getFontMetrics();
 		//System.out.println("Rank width: " + fm.stringWidth("Rank"));
-		g.setFont(bigFont);
+		g.setFont(rankFont);
 		FontMetrics fm = g.getFontMetrics();
 		String stringToDraw = "#" + user.getInt("rank");
 		int strgWidth = fm.stringWidth(stringToDraw);
-		g.drawString(stringToDraw, 1376 - strgWidth/2, 540);
+		g.drawString(stringToDraw, 1396 - strgWidth/2, 550);
 		
 		
 		double currentExp = user.getInt("currentExp") - user.getInt("expForCurrentLevel");
@@ -132,7 +159,7 @@ public class EXPCommand extends GenericCommand{
 		g.drawString(currentExp + " / " + nextExp, 270, 810);
 		g.drawString("Level: " + user.getInt("currentLevel"), 1480, 810);
 		
-		g.setColor(new Color(255,0,0));
+		g.setColor(member.getColor());
 		g.fillRoundRect(252, 830, (int) (1412.0 * (currentExp / nextExp)), 38, 38, 38);
 		
 		g.dispose();

@@ -44,6 +44,10 @@ public class Bot2 extends ListenerAdapter {
 	
 	 @SuppressWarnings("deprecation")
 	public static void main(String[] args ) {
+		 int c = 251;
+		 byte d = (byte)c;
+		 System.out.println(d);
+		 
 		 initHandlers();
 		 initConfigs();
 		 initUnirest();
@@ -54,8 +58,8 @@ public class Bot2 extends ListenerAdapter {
 	        	
 	            jda = JDABuilder.createDefault(getTokenConfig().BOT_TOKEN)
 	                    .addEventListeners(commandHandler)
-	                    .addEventListeners(new MessageSecurity())
-	                    .addEventListeners(reactionEmoteRoleHandler)
+	                    //.addEventListeners(new MessageSecurity())
+	                    //.addEventListeners(reactionEmoteRoleHandler)
 	                    .addEventListeners(levelingHandler)
 	                    .build();
 	            jda.awaitReady();

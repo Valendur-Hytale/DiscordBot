@@ -34,11 +34,12 @@ public class LevelingHandler extends ListenerAdapter {
 
 	@Override
 	public void onMessageReactionAdd(MessageReactionAddEvent e) {
-		final User user = e.retrieveUser().complete();
+		final Member member = e.retrieveMember().complete();
+		final User user = member.getUser();
 		if (user.isBot()) {
 			return;
 		}
-		userReactedToMessage(user.getIdLong());
+		userReactedToMessage(user.getIdLong(), member.getEffectiveName(), user.getEffectiveAvatarUrl());
 
 	}
 	
@@ -51,7 +52,7 @@ public class LevelingHandler extends ListenerAdapter {
 		// System.out.println("MemberId: " + e.getMember().getIdLong() + " UserId: " +
 		// e.getAuthor().getIdLong());
 		System.out.println("Received Message by: " + e.getMember().getIdLong());
-		userSendMessage(e.getMember().getIdLong(), e.getMessage().getContentDisplay().length());
+		userSendMessage(e.getMember().getIdLong(), e.getMessage().getContentDisplay().length(), e.getMember().getEffectiveName(), e.getAuthor().getAvatarUrl());
 	}
 	
 	
@@ -80,27 +81,27 @@ public class LevelingHandler extends ListenerAdapter {
 		return (LevelingConfig) Bot2.configHandler.getConfig(ConfigType.LEVELING_CONFIG);
 	}
 
-	private void userSendMessage(long id, int length) {
+	private void userSendMessage(long id, int length, final String name, final String url) {
 		LevelingUser user = levelingUsers.get(id);
 		if (user == null) {
 			user = new LevelingUser(id);
-			user.addMessage(length);
+			user.addMessage(length, name, url);
 			levelingUsers.put(id, user);
 			return;
 		}
-		user.addMessage(length);
+		user.addMessage(length, name, url);
 
 	}
 
-	private void userReactedToMessage(long id) {
+	private void userReactedToMessage(long id, final String name, final String url) {
 		LevelingUser user = levelingUsers.get(id);
 		if (user == null) {
 			user = new LevelingUser(id);
-			user.addReact();
+			user.addReact(name, url);
 			levelingUsers.put(id, user);
 			return;
 		}
-		user.addReact();
+		user.addReact(name, url);
 	}
 	
 	private void userChangedVoiceState(long id, boolean inVoice) {
@@ -116,8 +117,8 @@ public class LevelingHandler extends ListenerAdapter {
 	
 
 	public static void announcementUserLevelUp(JSONObject user) {
-		Bot2.getGuild().getTextChannelById(getConfig().LEVELING_ANNOUNCEMENT_CHANNEL)
-			.sendMessage("Herzlichen Glückwunsch <@" + user.getString("userID") + ">! Du bist zu Level " + user.getString("currentLevel") + " aufgestiegen!")
-			.queue();
+//		Bot2.getGuild().getTextChannelById(getConfig().LEVELING_ANNOUNCEMENT_CHANNEL)
+//			.sendMessage("Herzlichen Glückwunsch <@" + user.getString("userID") + ">! Du bist zu Level " + user.getString("currentLevel") + " aufgestiegen!")
+//			.queue();
 	}
 }

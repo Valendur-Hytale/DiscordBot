@@ -41,7 +41,7 @@ public class LevelingUser {
 		return inVoice;
 	}
 	
-	public boolean addMessage(final int length) {
+	public boolean addMessage(final int length, final String name, final String url) {
 		final LevelingConfig config = getConfig();
 		
 		messageCount++;
@@ -56,32 +56,32 @@ public class LevelingUser {
 		xp += config.getExpByMessageCount(messageCount);
 		
 		if (xp != 0) {
-			backendAddExp(xp);
+			backendAddExp(xp, name, url);
 		}
 		
 		return false; // TODO Return based on backend levelup response
 	}
 	
-	public void voiceCheck() {
+	public void voiceCheck(final String name, final String url) {
 		if (inVoice) {
-			backendAddExp(getConfig().getExpByVoiceTime((int) TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - inVoiceSince)));
+			backendAddExp(getConfig().getExpByVoiceTime((int) TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - inVoiceSince)), name, url);
 		}
 	}
 	
-	public void addReact() {
+	public void addReact(final String name, final String url) {
 		final LevelingConfig config = getConfig();
 		
 		final long currentTime = System.currentTimeMillis();
 		
 		if (lastReaction + config.REACTION_DELAY < currentTime) {
 			lastMessage = currentTime;
-			backendAddExp(config.getExpByReaction());
+			backendAddExp(config.getExpByReaction(), name, url);
 		}
 	}
 	
 	
-	private void backendAddExp(int exp) {
-		DBLevelingHandler.addExpToUser(memberId, exp, false);
+	private void backendAddExp(int exp, String name, String url) {
+		DBLevelingHandler.addExpToUser(memberId, exp, false, name, url);
 	}
 
 	

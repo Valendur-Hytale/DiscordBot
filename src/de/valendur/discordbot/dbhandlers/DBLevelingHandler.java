@@ -12,11 +12,13 @@ public class DBLevelingHandler {
 	
 	
 	
-	public static void addExpToUser(long id, int exp, boolean message) {
+	public static void addExpToUser(long id, int exp, boolean message, String name, String url) {
 		JSONObject json = new JSONObject();
 		json.put("userID", ""+id);
 		json.put("exp", exp);
 		json.put("message", message);
+		json.put("profileImage", url);
+		json.put("profileName", name);
 		Unirest.post("members/addExp").body(json).asJsonAsync(response -> {
 			System.out.println(response.getBody().getObject().toString());
 			JSONObject user = response.getBody().getObject();
