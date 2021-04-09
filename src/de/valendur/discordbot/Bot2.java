@@ -62,10 +62,11 @@ public class Bot2 extends ListenerAdapter {
 	        try {
 	        	
 	            jda = JDABuilder.createDefault(getTokenConfig().BOT_TOKEN)
-	                    .addEventListeners(commandHandler)
+	                    //.addEventListeners(commandHandler)
+	                    .addEventListeners(dataHandler)
 	                    //.addEventListeners(new MessageSecurity())
 	                    //.addEventListeners(reactionEmoteRoleHandler)
-	                    .addEventListeners(levelingHandler)
+	                    //.addEventListeners(levelingHandler)
 	                    .enableIntents(GatewayIntent.GUILD_MEMBERS)
 	                    .setMemberCachePolicy(MemberCachePolicy.ALL)
 	                    .build();
@@ -102,7 +103,6 @@ public class Bot2 extends ListenerAdapter {
 		 initCommands();
 		 reactionEmoteRoleHandler = new ReactionEmoteRoleHandler();
 		 levelingHandler = new LevelingHandler();
-		 levelingHandler.setup(getGuild());
 		 dataHandler = new DataHandler();
 	 }
 	 
@@ -137,9 +137,9 @@ public class Bot2 extends ListenerAdapter {
 		 final RepeatedTaskExecutor voiceCheck = new RepeatedTaskExecutor(new VoiceCheckTask(getBaseConfig().SCHEDULING_VOICE_CHECK));
 		 
 		 
-		 taskExecutors.add(dailyReset);
-		 taskExecutors.add(dailyWebsiteFix);
-		 taskExecutors.add(voiceCheck);
+//		 taskExecutors.add(dailyReset);
+//		 taskExecutors.add(dailyWebsiteFix);
+//		 taskExecutors.add(voiceCheck);
 	 }
 	 
 	 
