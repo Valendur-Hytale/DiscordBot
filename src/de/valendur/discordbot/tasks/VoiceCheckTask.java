@@ -14,8 +14,8 @@ public class VoiceCheckTask extends GenericRepeatedTask {
 
 	@Override
 	public void execute() {
-		for (Member member : Utils.getUsersInVoiceChannel()) {
-			Bot2.levelingHandler.levelingUsers.get(member.getIdLong()).voiceCheck(member.getEffectiveName(), member.getUser().getEffectiveAvatarUrl());
+		for (long id : Bot2.levelingHandler.levelingUsers.keySet()) {
+			Bot2.levelingHandler.levelingUsers.get(id).voiceCheck();
 		}
 	}
 	

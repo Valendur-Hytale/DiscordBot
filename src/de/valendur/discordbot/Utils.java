@@ -41,6 +41,7 @@ public class Utils {
 		return userList;
 	}
 	
+	
 	public static Message sendImage(Guild guild, TextChannel channel, BufferedImage image, String messageText)
     {
 		return sendImage(guild, channel, image, new MessageBuilder().append(messageText).build());

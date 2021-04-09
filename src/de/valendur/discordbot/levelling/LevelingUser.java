@@ -62,10 +62,11 @@ public class LevelingUser {
 		return false; // TODO Return based on backend levelup response
 	}
 	
-	public void voiceCheck(final String name, final String url) {
-		if (inVoice) {
-			backendAddExp(getConfig().getExpByVoiceTime((int) TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - inVoiceSince)), name, url);
+	public void voiceCheck() {
+		if (!isInVoice()) {
+			return;
 		}
+		backendAddExp(getConfig().getExpByVoiceTime((int) TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - inVoiceSince)), null, null);
 	}
 	
 	public void addReact(final String name, final String url) {

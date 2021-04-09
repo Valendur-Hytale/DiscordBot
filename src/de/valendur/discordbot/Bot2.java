@@ -19,10 +19,12 @@ import de.valendur.discordbot.configs.SecurityConfig;
 import de.valendur.discordbot.configs.TokenConfig;
 import de.valendur.discordbot.handlers.CommandHandler;
 import de.valendur.discordbot.handlers.ConfigHandler;
+import de.valendur.discordbot.handlers.DataHandler;
 import de.valendur.discordbot.handlers.LevelingHandler;
 import de.valendur.discordbot.handlers.ReactionEmoteRoleHandler;
 import de.valendur.discordbot.security.MessageSecurity;
 import de.valendur.discordbot.tasks.DailyLevelingResetTask;
+import de.valendur.discordbot.tasks.DailyWebsiteFixer;
 import de.valendur.discordbot.tasks.VoiceCheckTask;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
@@ -30,6 +32,8 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
 
 public class Bot2 extends ListenerAdapter {
 	
@@ -39,6 +43,7 @@ public class Bot2 extends ListenerAdapter {
 	public static ConfigHandler configHandler;
 	public static ReactionEmoteRoleHandler reactionEmoteRoleHandler;
 	public static LevelingHandler levelingHandler;
+	public static DataHandler dataHandler;
 	
 	public static HashSet<Object> taskExecutors = new HashSet<Object>();
 	
@@ -61,6 +66,8 @@ public class Bot2 extends ListenerAdapter {
 	                    //.addEventListeners(new MessageSecurity())
 	                    //.addEventListeners(reactionEmoteRoleHandler)
 	                    .addEventListeners(levelingHandler)
+	                    .enableIntents(GatewayIntent.GUILD_MEMBERS)
+	                    .setMemberCachePolicy(MemberCachePolicy.ALL)
 	                    .build();
 	            jda.awaitReady();
 	            System.out.println("Erfolgreich gestartet !");
@@ -95,6 +102,8 @@ public class Bot2 extends ListenerAdapter {
 		 initCommands();
 		 reactionEmoteRoleHandler = new ReactionEmoteRoleHandler();
 		 levelingHandler = new LevelingHandler();
+		 levelingHandler.setup(getGuild());
+		 dataHandler = new DataHandler();
 	 }
 	 
 	 public static void initCommands() {
@@ -121,10 +130,15 @@ public class Bot2 extends ListenerAdapter {
 				 																	getBaseConfig().SCHEDULING_LEVELING_RESET_MINUTE, 
 				 																	getBaseConfig().SCHEDULING_LEVELING_RESET_SECOND));
 		 
+		 final ScheduledTaskExecutor dailyWebsiteFix = new ScheduledTaskExecutor(new DailyWebsiteFixer(getBaseConfig().SCHEDULING_LEVELING_RESET_HOUR, 
+					getBaseConfig().SCHEDULING_LEVELING_RESET_MINUTE, 
+					getBaseConfig().SCHEDULING_LEVELING_RESET_SECOND));
+		 
 		 final RepeatedTaskExecutor voiceCheck = new RepeatedTaskExecutor(new VoiceCheckTask(getBaseConfig().SCHEDULING_VOICE_CHECK));
 		 
 		 
 		 taskExecutors.add(dailyReset);
+		 taskExecutors.add(dailyWebsiteFix);
 		 taskExecutors.add(voiceCheck);
 	 }
 	 

@@ -111,11 +111,10 @@ public class EXPCommand extends GenericCommand{
 		g.drawImage(makeRoundedCorner(profilePic, 375), 261, 221, 375, 375, null);
 		
 		g.setColor(Color.WHITE);
-		
-		Font rankFont = new Font("Arial Black", Font.PLAIN, 115);
-		Font bigFont = new Font("Arial Black", Font.PLAIN, 75);
-		Font middleFont = new Font("Arial Black", Font.PLAIN, 57);
-		Font smallFont = new Font("Arial Black", Font.PLAIN, 40);
+		Font rankFont = new Font(Font.SANS_SERIF, Font.PLAIN, 115);
+		Font bigFont = new Font(Font.SANS_SERIF, Font.PLAIN, 75);
+		Font middleFont = new Font(Font.SANS_SERIF, Font.PLAIN, 57);
+		Font smallFont = new Font(Font.SANS_SERIF, Font.PLAIN, 40);
 		
 		g.setFont(bigFont);
 		g.setColor(member.getColor());

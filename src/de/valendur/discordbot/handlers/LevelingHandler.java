@@ -34,12 +34,14 @@ public class LevelingHandler extends ListenerAdapter {
 
 	@Override
 	public void onMessageReactionAdd(MessageReactionAddEvent e) {
-		final Member member = e.retrieveMember().complete();
-		final User user = member.getUser();
-		if (user.isBot()) {
-			return;
-		}
-		userReactedToMessage(user.getIdLong(), member.getEffectiveName(), user.getEffectiveAvatarUrl());
+		e.retrieveMember().queue(member -> {
+			final User user = member.getUser();
+			if (user.isBot()) {
+				return;
+			}
+			userReactedToMessage(user.getIdLong(), member.getEffectiveName(), user.getEffectiveAvatarUrl());
+		});
+		
 
 	}
 	
