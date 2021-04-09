@@ -67,7 +67,7 @@ public class Bot2 extends ListenerAdapter {
 	                    //.addEventListeners(new MessageSecurity())
 	                    //.addEventListeners(reactionEmoteRoleHandler)
 	                    //.addEventListeners(levelingHandler)
-	                    .enableIntents(GatewayIntent.GUILD_MEMBERS)
+	                    .enableIntents(GatewayIntent.GUILD_MEMBERS,GatewayIntent.GUILD_PRESENCES)
 	                    .setMemberCachePolicy(MemberCachePolicy.ALL)
 	                    .build();
 	            jda.awaitReady();
