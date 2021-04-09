@@ -1,10 +1,15 @@
 package de.valendur.discordbot.dbhandlers;
 
+import java.util.concurrent.CompletableFuture;
+
 import de.valendur.discordbot.Bot2;
 import de.valendur.discordbot.configs.ConfigType;
 import de.valendur.discordbot.configs.ReactionEmoteRoleConfig;
 import de.valendur.discordbot.handlers.LevelingHandler;
+import kong.unirest.HttpResponse;
+import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
+import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONElement;
 import kong.unirest.json.JSONObject;
 
@@ -34,5 +39,8 @@ public class DBLevelingHandler {
 		return Unirest.get("members/" + id).asJson().getBody().getObject();
 	}
 	
+	public static JSONArray getAllUsers() {
+		return Unirest.get("members/").asJson().getBody().getArray();
+	}
 	
 }
