@@ -19,7 +19,6 @@ import de.valendur.discordbot.configs.SecurityConfig;
 import de.valendur.discordbot.configs.TokenConfig;
 import de.valendur.discordbot.handlers.CommandHandler;
 import de.valendur.discordbot.handlers.ConfigHandler;
-import de.valendur.discordbot.handlers.DataHandler;
 import de.valendur.discordbot.handlers.LevelingHandler;
 import de.valendur.discordbot.handlers.ReactionEmoteRoleHandler;
 import de.valendur.discordbot.security.MessageSecurity;
@@ -43,7 +42,6 @@ public class Bot2 extends ListenerAdapter {
 	public static ConfigHandler configHandler;
 	public static ReactionEmoteRoleHandler reactionEmoteRoleHandler;
 	public static LevelingHandler levelingHandler;
-	public static DataHandler dataHandler;
 	
 	public static HashSet<Object> taskExecutors = new HashSet<Object>();
 	
@@ -102,8 +100,6 @@ public class Bot2 extends ListenerAdapter {
 		 initCommands();
 		 reactionEmoteRoleHandler = new ReactionEmoteRoleHandler();
 		 levelingHandler = new LevelingHandler();
-		 levelingHandler.setup(getGuild());
-		 dataHandler = new DataHandler();
 	 }
 	 
 	 public static void initCommands() {
@@ -145,6 +141,7 @@ public class Bot2 extends ListenerAdapter {
 	 
 	 public static void setupHandlers() {
 		 reactionEmoteRoleHandler.setup(getGuild());
+		 levelingHandler.setup(getGuild());
 	 }
 	 
 	 public static void initUnirest() {
