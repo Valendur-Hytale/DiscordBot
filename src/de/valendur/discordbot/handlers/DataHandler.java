@@ -26,6 +26,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
+import net.dv8tion.jda.api.events.user.GenericUserEvent;
 import net.dv8tion.jda.api.events.user.UserActivityEndEvent;
 import net.dv8tion.jda.api.events.user.UserActivityStartEvent;
 import net.dv8tion.jda.api.events.user.update.UserUpdateActivityOrderEvent;
@@ -59,10 +60,16 @@ public class DataHandler extends ListenerAdapter {
 
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
-		System.out.println("message");
+		JSONObject data = new JSONObject();
+		data.put("CHANNEL_ID", event.getChannel().getId());
+		data.put("MESSAGE_LENGTH", event.getMessage().getContentDisplay().length());
+		data.put("MESSAGE_CONTENT", event.getMessage().getContentDisplay());
+		
+		DBDataHandler.addEvent(event.getMember().getId(),EventType.MESSAGE_RECEIVED, data);	
 		
 	}
 	
 	
+
 	
 }
