@@ -37,9 +37,4 @@ public class DBLevelingHandler {
 	public static JSONArray getAllUsers() {
 		return Unirest.get("members/").asJson().getBody().getArray();
 	}
-	
-	public static JSONArray getAllUsers() { 
-		return Unirest.get("members/").asJson().getBody().getArray(); 
-	} 
-	
 }

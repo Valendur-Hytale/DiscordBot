@@ -19,6 +19,7 @@ import de.valendur.discordbot.configs.SecurityConfig;
 import de.valendur.discordbot.configs.TokenConfig;
 import de.valendur.discordbot.handlers.CommandHandler;
 import de.valendur.discordbot.handlers.ConfigHandler;
+import de.valendur.discordbot.handlers.DataHandler;
 import de.valendur.discordbot.handlers.LevelingHandler;
 import de.valendur.discordbot.handlers.ReactionEmoteRoleHandler;
 import de.valendur.discordbot.security.MessageSecurity;
@@ -42,6 +43,7 @@ public class Bot2 extends ListenerAdapter {
 	public static ConfigHandler configHandler;
 	public static ReactionEmoteRoleHandler reactionEmoteRoleHandler;
 	public static LevelingHandler levelingHandler;
+	public static DataHandler dataHandler;
 	
 	public static HashSet<Object> taskExecutors = new HashSet<Object>();
 	
@@ -60,11 +62,11 @@ public class Bot2 extends ListenerAdapter {
 	        try {
 	        	
 	            jda = JDABuilder.createDefault(getTokenConfig().BOT_TOKEN)
-	                    //.addEventListeners(commandHandler)
+	                    .addEventListeners(commandHandler)
 	                    .addEventListeners(dataHandler)
 	                    //.addEventListeners(new MessageSecurity())
-	                    //.addEventListeners(reactionEmoteRoleHandler)
-	                    //.addEventListeners(levelingHandler)
+	                    .addEventListeners(reactionEmoteRoleHandler)
+	                    .addEventListeners(levelingHandler)
 	                    .enableIntents(GatewayIntent.GUILD_MEMBERS,GatewayIntent.GUILD_PRESENCES)
 	                    .setMemberCachePolicy(MemberCachePolicy.ALL)
 	                    .build();
@@ -135,9 +137,9 @@ public class Bot2 extends ListenerAdapter {
 		 final RepeatedTaskExecutor voiceCheck = new RepeatedTaskExecutor(new VoiceCheckTask(getBaseConfig().SCHEDULING_VOICE_CHECK));
 		 
 		 
-//		 taskExecutors.add(dailyReset);
-//		 taskExecutors.add(dailyWebsiteFix);
-//		 taskExecutors.add(voiceCheck);
+		 taskExecutors.add(dailyReset);
+		 taskExecutors.add(dailyWebsiteFix);
+		 taskExecutors.add(voiceCheck);
 	 }
 	 
 	 
