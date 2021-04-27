@@ -60,13 +60,15 @@ public class LevelingHandler extends ListenerAdapter {
 	
 
 	@Override
-	public void onGuildVoiceJoin(GuildVoiceJoinEvent event) {
-		userChangedVoiceState(event.getMember().getIdLong(), true);
+	public void onGuildVoiceJoin(GuildVoiceJoinEvent e) {
+		if (e.getMember().getUser().isBot()) return;
+		userChangedVoiceState(e.getMember().getIdLong(), true);
 	}
 
 	@Override
-	public void onGuildVoiceLeave(GuildVoiceLeaveEvent event) {
-		userChangedVoiceState(event.getMember().getIdLong(), false);
+	public void onGuildVoiceLeave(GuildVoiceLeaveEvent e) {
+		if (e.getMember().getUser().isBot()) return;
+		userChangedVoiceState(e.getMember().getIdLong(), false);
 	}
 
 	public void setup(Guild guild) {
