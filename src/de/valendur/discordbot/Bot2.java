@@ -48,11 +48,7 @@ public class Bot2 extends ListenerAdapter {
 	public static HashSet<Object> taskExecutors = new HashSet<Object>();
 	
 	 @SuppressWarnings("deprecation")
-	public static void main(String[] args ) {
-		 int c = 251;
-		 byte d = (byte)c;
-		 System.out.println(d);
-		 
+	public static void main(String[] args ) {		 
 		 initHandlers();
 		 initConfigs();
 		 initUnirest();
