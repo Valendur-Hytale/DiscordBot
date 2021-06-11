@@ -1,6 +1,6 @@
 package de.valendur.discordbot.handlers;
 
-import de.valendur.discordbot.Bot2;
+import de.valendur.discordbot.Bot;
 import de.valendur.discordbot.configs.ConfigType;
 import de.valendur.discordbot.configs.ReactionEmoteRoleConfig;
 import de.valendur.discordbot.reactionrole.ReactionMessage;
@@ -45,6 +45,6 @@ public class ReactionEmoteRoleHandler extends ListenerAdapter {
 	}
 	
 	public ReactionEmoteRoleConfig getConfig() {
-		return (ReactionEmoteRoleConfig) Bot2.configHandler.getConfig(ConfigType.REACTION_ROLE_CONFIG);
+		return (ReactionEmoteRoleConfig) Bot.configHandler.getConfig(ConfigType.REACTION_ROLE_CONFIG);
 	}
 }

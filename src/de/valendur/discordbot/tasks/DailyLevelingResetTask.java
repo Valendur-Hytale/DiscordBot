@@ -1,6 +1,6 @@
 package de.valendur.discordbot.tasks;
 
-import de.valendur.discordbot.Bot2;
+import de.valendur.discordbot.Bot;
 
 public class DailyLevelingResetTask extends GenericScheduledTask {
 
@@ -11,7 +11,7 @@ public class DailyLevelingResetTask extends GenericScheduledTask {
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		Bot2.levelingHandler.setup(Bot2.getGuild());
+		Bot.levelingHandler.setup(Bot.getGuild());
 	}
 	
 

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.valendur.discordbot.Bot2;
+import de.valendur.discordbot.Bot;
 import de.valendur.discordbot.Utils;
 import de.valendur.discordbot.configs.ConfigType;
 import de.valendur.discordbot.configs.LevelingConfig;
@@ -19,6 +19,7 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberLeaveEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -27,10 +28,15 @@ import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class LevelingHandler extends ListenerAdapter {
-	
-	public HashMap<Long,LevelingUser> levelingUsers = new HashMap<Long,LevelingUser>();
 
-	//List<LevelingUser> levelingUsers = new ArrayList<LevelingUser>();
+	public HashMap<Long, LevelingUser> levelingUsers = new HashMap<Long, LevelingUser>();
+
+	// List<LevelingUser> levelingUsers = new ArrayList<LevelingUser>();
+
+	@Override
+	public void onGuildMemberLeave(GuildMemberLeaveEvent e) {
+		DBLevelingHandler.delUser(e.getMember().getIdLong());
+	}
 
 	@Override
 	public void onMessageReactionAdd(MessageReactionAddEvent e) {
@@ -41,48 +47,46 @@ public class LevelingHandler extends ListenerAdapter {
 			}
 			userReactedToMessage(user.getIdLong(), member.getEffectiveName(), user.getEffectiveAvatarUrl());
 		});
-		
 
 	}
-	
+
 	@Override
 	public void onGuildMessageReceived(GuildMessageReceivedEvent e) {
 		if (e.getAuthor().isBot())
 			return;
-		if (e.getMessage().getContentRaw().startsWith(Bot2.getBaseConfig().COMMAND_PREFIX))
+		if (e.getMessage().getContentRaw().startsWith(Bot.getBaseConfig().COMMAND_PREFIX))
 			return;
 		// System.out.println("MemberId: " + e.getMember().getIdLong() + " UserId: " +
 		// e.getAuthor().getIdLong());
 		System.out.println("Received Message by: " + e.getMember().getIdLong());
-		userSendMessage(e.getMember().getIdLong(), e.getMessage().getContentDisplay().length(), e.getMember().getEffectiveName(), e.getAuthor().getAvatarUrl());
+		userSendMessage(e.getMember().getIdLong(), e.getMessage().getContentDisplay().length(),
+				e.getMember().getEffectiveName(), e.getAuthor().getAvatarUrl());
 	}
-	
-	
 
 	@Override
 	public void onGuildVoiceJoin(GuildVoiceJoinEvent e) {
-		if (e.getMember().getUser().isBot()) return;
+		if (e.getMember().getUser().isBot())
+			return;
 		userChangedVoiceState(e.getMember().getIdLong(), true);
 	}
 
 	@Override
 	public void onGuildVoiceLeave(GuildVoiceLeaveEvent e) {
-		if (e.getMember().getUser().isBot()) return;
+		if (e.getMember().getUser().isBot())
+			return;
 		userChangedVoiceState(e.getMember().getIdLong(), false);
 	}
 
 	public void setup(Guild guild) {
 		levelingUsers.clear();
-		
+
 		for (Member member : Utils.getUsersInVoiceChannel()) {
 			userChangedVoiceState(member.getIdLong(), true);
 		}
 	}
-	
-	
 
 	public static LevelingConfig getConfig() {
-		return (LevelingConfig) Bot2.configHandler.getConfig(ConfigType.LEVELING_CONFIG);
+		return (LevelingConfig) Bot.configHandler.getConfig(ConfigType.LEVELING_CONFIG);
 	}
 
 	private void userSendMessage(long id, int length, final String name, final String url) {
@@ -107,7 +111,7 @@ public class LevelingHandler extends ListenerAdapter {
 		}
 		user.addReact(name, url);
 	}
-	
+
 	private void userChangedVoiceState(long id, boolean inVoice) {
 		LevelingUser user = levelingUsers.get(id);
 		if (user == null) {
@@ -118,7 +122,6 @@ public class LevelingHandler extends ListenerAdapter {
 		}
 		user.setVoiceState(inVoice);
 	}
-	
 
 	public static void announcementUserLevelUp(JSONObject user) {
 //		Bot2.getGuild().getTextChannelById(getConfig().LEVELING_ANNOUNCEMENT_CHANNEL)

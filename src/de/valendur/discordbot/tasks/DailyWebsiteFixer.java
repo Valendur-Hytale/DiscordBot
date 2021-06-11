@@ -1,6 +1,6 @@
 package de.valendur.discordbot.tasks;
 
-import de.valendur.discordbot.Bot2;
+import de.valendur.discordbot.Bot;
 import de.valendur.discordbot.dbhandlers.DBLevelingHandler;
 import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
@@ -14,7 +14,7 @@ public class DailyWebsiteFixer extends GenericScheduledTask {
 
 	@Override
 	public void execute() {
-		Guild g = Bot2.getGuild();
+		Guild g = Bot.getGuild();
 		JSONArray users = DBLevelingHandler.getAllUsers();
 		users.forEach(obj -> {
 			JSONObject user = (JSONObject) obj;

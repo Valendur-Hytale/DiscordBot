@@ -2,6 +2,8 @@ package de.valendur.discordbot.commands;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
+
+@Deprecated
 public abstract class GenericCommand {
 
 	

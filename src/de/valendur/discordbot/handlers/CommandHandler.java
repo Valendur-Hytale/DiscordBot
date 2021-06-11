@@ -3,8 +3,7 @@ package de.valendur.discordbot.handlers;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.valendur.discordbot.Bot2;
-import de.valendur.discordbot.Config;
+import de.valendur.discordbot.Bot;
 import de.valendur.discordbot.commands.GenericCommand;
 import de.valendur.discordbot.configs.BaseConfig;
 import de.valendur.discordbot.configs.ConfigType;
@@ -65,6 +64,6 @@ public class CommandHandler extends ListenerAdapter {
 	}
 	
 	public static BaseConfig getConfig() {
-		return (BaseConfig) Bot2.configHandler.getConfig(ConfigType.BASE_CONFIG);
+		return (BaseConfig) Bot.configHandler.getConfig(ConfigType.BASE_CONFIG);
 	}
 }

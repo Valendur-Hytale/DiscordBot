@@ -14,7 +14,6 @@ import kong.unirest.ContentType;
 import kong.unirest.MultipartBody;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestException;
-import kong.unirest.json.JSONException;
 import kong.unirest.json.JSONObject;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Guild;
@@ -31,7 +30,7 @@ public class Utils {
 	
 	public static List<Member> getUsersInVoiceChannel() {
 		ArrayList<Member> userList = new ArrayList<>();
-		for (VoiceChannel channel : Bot2.getGuild().getVoiceChannels()) {
+		for (VoiceChannel channel : Bot.getGuild().getVoiceChannels()) {
 			if (channel != null) {
 			    List<Member> connectedUsers = channel.getMembers();
 			    userList.addAll(connectedUsers.stream().filter(user -> !user.getUser().isBot() && !user.getVoiceState().isDeafened())

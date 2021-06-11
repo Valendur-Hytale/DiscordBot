@@ -37,4 +37,8 @@ public class DBLevelingHandler {
 		return Unirest.get("members/").asJson().getBody().getArray(); 
 	} 
 	
+	public static void delUser(long id) {
+		Unirest.delete("members/" + id).asJsonAsync();
+	}
+	
 }

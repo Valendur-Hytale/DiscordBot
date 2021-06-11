@@ -7,6 +7,9 @@ public class BaseConfig extends GenericConfig {
 	public String COMMAND_PREFIX;
 	public String BACKEND_LINK;
 	public String ERROR_CHANNEL;
+	public String BIRTHDAY_CHANNEL;
+	public String BIRTHDAY_MESSAGE;
+	public long BIRTHDAY_ROLE_ID;
 	
 	public int SCHEDULING_LEVELING_RESET_HOUR, SCHEDULING_LEVELING_RESET_MINUTE, SCHEDULING_LEVELING_RESET_SECOND;
 	public int SCHEDULING_VOICE_CHECK;

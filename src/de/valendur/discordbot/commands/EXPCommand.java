@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 
 import javax.imageio.ImageIO;
 
-import de.valendur.discordbot.Bot2;
+import de.valendur.discordbot.Bot;
 import de.valendur.discordbot.Utils;
 import de.valendur.discordbot.configs.BaseConfig;
 import de.valendur.discordbot.configs.ConfigType;
@@ -33,6 +33,7 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.utils.AttachmentOption;
+
 
 public class EXPCommand extends GenericCommand{
 

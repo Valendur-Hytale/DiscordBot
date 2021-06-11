@@ -1,7 +1,6 @@
 package de.valendur.discordbot.security;
 
-import de.valendur.discordbot.Bot2;
-import de.valendur.discordbot.Config;
+import de.valendur.discordbot.Bot;
 import de.valendur.discordbot.configs.ConfigType;
 import de.valendur.discordbot.configs.SecurityConfig;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -36,7 +35,7 @@ public class MessageSecurity extends ListenerAdapter {
 	
 	
 	private SecurityConfig getConfig() {
-		return (SecurityConfig) Bot2.configHandler.getConfig(ConfigType.SECURITY_CONFIG);
+		return (SecurityConfig) Bot.configHandler.getConfig(ConfigType.SECURITY_CONFIG);
 	}
 	
 	

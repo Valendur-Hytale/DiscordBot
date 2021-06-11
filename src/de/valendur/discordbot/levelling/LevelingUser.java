@@ -2,7 +2,7 @@ package de.valendur.discordbot.levelling;
 
 import java.util.concurrent.TimeUnit;
 
-import de.valendur.discordbot.Bot2;
+import de.valendur.discordbot.Bot;
 import de.valendur.discordbot.configs.ConfigType;
 import de.valendur.discordbot.configs.LevelingConfig;
 import de.valendur.discordbot.dbhandlers.DBLevelingHandler;
@@ -88,6 +88,6 @@ public class LevelingUser {
 	
 	
 	public LevelingConfig getConfig() {
-		return (LevelingConfig) Bot2.configHandler.getConfig(ConfigType.LEVELING_CONFIG);
+		return (LevelingConfig) Bot.configHandler.getConfig(ConfigType.LEVELING_CONFIG);
 	}
 }
