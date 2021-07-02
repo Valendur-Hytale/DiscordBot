@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.valendur.discordbot.Bot;
+import de.valendur.discordbot.commands.BirthdayCommand;
 import de.valendur.discordbot.commands.GenericCommand;
 import de.valendur.discordbot.configs.BaseConfig;
 import de.valendur.discordbot.configs.ConfigType;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.Command.Subcommand;
 
 public class CommandHandler extends ListenerAdapter {
 
@@ -55,6 +58,19 @@ public class CommandHandler extends ListenerAdapter {
 			}
 		}
 		
+	}
+	
+	@Override
+	public void onSlashCommand(SlashCommandEvent event) {
+
+		switch (event.getName()) {
+		case "geburtstag": {
+			BirthdayCommand.command(event, event.getSubcommandName());
+			return;
+		}
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + event.getName());
+		}
 	}
 	
 	

@@ -9,5 +9,8 @@
 			"SECOND" : 59
 		},
 		"VOICE_CHECK_EVERY_SECONDS" : 60
-	}
+	},
+	"BIRTHDAY_CHANNEL" : "852974992500326450",
+	"BIRTHDAY_MESSAGE" : "gratz dude %user%",
+	"BIRTHDAY_ROLE_ID" : ""
 }

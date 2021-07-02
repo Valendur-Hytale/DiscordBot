@@ -1,12 +1,10 @@
 package de.valendur.discordbot;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import javax.security.auth.login.LoginException;
 
+import de.valendur.discordbot.commands.BirthdayCommand;
 import de.valendur.discordbot.commands.EXPCommand;
 import de.valendur.discordbot.commands.PingCommand;
 import de.valendur.discordbot.commands.ReloadCommand;
@@ -21,7 +19,6 @@ import de.valendur.discordbot.handlers.CommandHandler;
 import de.valendur.discordbot.handlers.ConfigHandler;
 import de.valendur.discordbot.handlers.LevelingHandler;
 import de.valendur.discordbot.handlers.ReactionEmoteRoleHandler;
-import de.valendur.discordbot.security.MessageSecurity;
 import de.valendur.discordbot.tasks.DailyLevelingResetTask;
 import de.valendur.discordbot.tasks.DailyWebsiteFixer;
 import de.valendur.discordbot.tasks.VoiceCheckTask;
@@ -31,8 +28,16 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
+import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
+import net.dv8tion.jda.api.interactions.commands.build.SubcommandGroupData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
+
+import static net.dv8tion.jda.api.interactions.commands.OptionType.*;
 
 public class Bot extends ListenerAdapter {
 	
@@ -44,6 +49,8 @@ public class Bot extends ListenerAdapter {
 	public static LevelingHandler levelingHandler;
 	
 	public static HashSet<Object> taskExecutors = new HashSet<Object>();
+	
+	
 	
 	 @SuppressWarnings("deprecation")
 	public static void main(String[] args ) {
@@ -57,6 +64,7 @@ public class Bot extends ListenerAdapter {
 	        	
 	            jda = JDABuilder.createDefault(getTokenConfig().BOT_TOKEN)
 	                    .addEventListeners(commandHandler)
+	                    .addEventListeners(new BirthdayCommand())
 	                    //.addEventListeners(new MessageSecurity())
 	                    //.addEventListeners(reactionEmoteRoleHandler)
 	                    .addEventListeners(levelingHandler)
@@ -77,6 +85,7 @@ public class Bot extends ListenerAdapter {
 	        }
 	        
 	        setupHandlers();
+	        createCommands();
 	    }
 	 
 	 public static BaseConfig getBaseConfig() {
@@ -98,12 +107,66 @@ public class Bot extends ListenerAdapter {
 		 levelingHandler = new LevelingHandler();
 	 }
 	 
+	 @Deprecated
 	 public static void initCommands() {
 		 commandHandler = new CommandHandler("!!!");
 		 commandHandler.addCommand(new PingCommand("ping"));
 		 commandHandler.addCommand(new ReloadCommand("reload"));
 		 commandHandler.addCommand(new EXPCommand("xp"));
 		 commandHandler.addCommand(new WaitCommand("wait"));
+	 }
+	 
+	 public static void createCommands() {
+		 //jda.retrieveCommands().complete().forEach(command -> command.delete().queue());
+		 CommandListUpdateAction commands = getGuild().updateCommands(); //jda.updateCommands();
+
+	        // Moderation commands with required options
+	        commands.addCommands(
+	            new CommandData("xp", "Zeigt dir deine Level-Karte an.")
+	                .addOptions(new OptionData(USER, "user", "Gib an einen Nutzer an um dessen Level Karte zu sehen.", false) // USER type allows to include members of the server or other users by id
+	                    .setRequired(false)) // This command requires a parameter
+	                //.addOptions(new OptionData(INTEGER, "del_days", "Delete messages from the past days.")) // This is optional
+	        );
+	        
+	        commands.addCommands(
+		            new CommandData("kreload", "Lädt Kiras Config's neu. Das benötigt die entsprechenden Rechte.")// This command requires a parameter
+		                //.addOptions(new OptionData(INTEGER, "del_days", "Delete messages from the past days.")) // This is optional
+		        );
+	        
+	        commands.addCommands(
+		            new CommandData("geburtstag", "Hiermit kannst du Geburtstage verwalten.")
+		            	//.addOptions(new OptionData(SUB_COMMAND, "subcommand", "Hiermit kannst du Geburtstage verwalten."))
+		            	.addSubcommands(
+		            		new SubcommandData("set", "Hiermit setzt du einen neuen Geburtstag")
+		            			.addOptions(new OptionData(INTEGER, "day", "Der Tag deines Geburtstags. (1-31)", true),
+		            					    new OptionData(INTEGER, "month", "Der Monat deines Geburtstags. (1-12)", true)
+		            					   // new OptionData(USER, "user", "Um den Geburtstag eines bestimmten Nutzers zu bearbeiten", false)
+		            			)
+		            		/*new SubcommandData("delete", "Hiermit löscht du einen Geburtstag")
+		            			//.addOption(USER, "user", "Lösche den Geburtstag eines Nutzers. Benötigt entsprechende Rechte", false)
+		            			*/
+		            		)
+		                //.addOptions(new OptionData(INTEGER, "del_days", "Delete messages from the past days.")) // This is optional
+		        );
+	        // Simple reply commands
+	        /*commands.addCommands(
+	            new CommandData("say", "Makes the bot say what you tell it to")
+	                .addOptions(new OptionData(STRING, "content", "What the bot should say")
+	                    .setRequired(true))
+	        );
+
+	        // Commands without any inputs
+	        commands.addCommands(
+	            new CommandData("leave", "Make the bot leave the server")
+	        );
+
+	        commands.addCommands(
+	            new CommandData("prune", "Prune messages from this channel")
+	                .addOptions(new OptionData(INTEGER, "amount", "How many messages to prune (Default 100)"))
+	        );*/
+
+	        // Send the new set of commands to discord, this will override any existing global commands with the new set provided here
+	        commands.queue();
 	 }
 	 
 	 public static void initConfigs() {
