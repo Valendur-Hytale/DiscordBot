@@ -24,7 +24,7 @@ public class ReactionEmoteRoleConfig extends GenericConfig {
 		for (int i = 0; i < messages.length(); i++) {
 			JSONObject message = messages.getJSONObject(i);
 			
-			ReactionMessage reactionMessage = new ReactionMessage(message.getString("CHANNEL_ID"), message.getString("MESSAGE_ID"));
+			ReactionMessage reactionMessage = new ReactionMessage(message.getString("CHANNEL_ID"), message.getString("MESSAGE_ID"), message.getBoolean("EXCLUSIVE"));
 					
 			JSONArray emoteRoles = message.getJSONArray("EMOTE_ROLES");
 			for (int ii = 0; ii < emoteRoles.length(); ii++) {

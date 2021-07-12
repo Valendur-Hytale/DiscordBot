@@ -19,8 +19,12 @@ public class ReactionEmoteRoleHandler extends ListenerAdapter {
 		} 
 		for (final ReactionMessage reactionMessage : getConfig().getReactionMessages()) {
 			if (reactionMessage.getMessageID().equalsIgnoreCase(e.getMessageId())) {
-				System.out.println("Added reaction");
-				reactionMessage.addedReaction(e.retrieveMember().complete(), e.getReaction());
+				if (reactionMessage.isExclusive()) {
+					reactionMessage.addedReaction(e.retrieveMember().complete(), e.getReaction(), e);
+				} else {
+					reactionMessage.addedReaction(e.retrieveMember().complete(), e.getReaction());
+				}
+				
 			}
 		}
 	}

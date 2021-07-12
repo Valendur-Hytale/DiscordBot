@@ -2,6 +2,7 @@ package de.valendur.discordbot.configs;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -17,7 +18,7 @@ public abstract class GenericConfig {
 	
 	public JSONObject readConfig() {
 		try {
-			return new JSONObject(new String(Files.readAllBytes(Paths.get(type.getFileName()))));
+			return new JSONObject(new String(Files.readAllBytes(Paths.get(type.getFileName())), StandardCharsets.UTF_8));
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
@@ -26,7 +27,7 @@ public abstract class GenericConfig {
 	
 	public String readConfigString() {
 		try {
-			return new String(Files.readAllBytes(Paths.get(type.getFileName())));
+			return new String(Files.readAllBytes(Paths.get(type.getFileName())), StandardCharsets.UTF_8);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;

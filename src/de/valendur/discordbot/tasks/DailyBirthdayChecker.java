@@ -1,5 +1,6 @@
 package de.valendur.discordbot.tasks;
 
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import de.valendur.discordbot.Bot;
@@ -17,30 +18,39 @@ public class DailyBirthdayChecker extends GenericScheduledTask {
 
 	@Override
 	public void execute() {
+		System.out.println("Starting Birthday Check");
 		Guild g = Bot.getGuild();
 		JSONArray users = DBLevelingHandler.getAllUsers();
-		Role role = g.getRoleById(Bot.getBaseConfig().BIRTHDAY_ROLE_ID);
-		final DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+		try {
+			Role role = g.getRoleById(Bot.getBaseConfig().BIRTHDAY_ROLE_ID);
+			final DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
-		// The parsed date
-		
-		ZonedDateTime today = ZonedDateTime.now();
-		users.forEach(obj -> {
-			JSONObject user = (JSONObject) obj;
-			g.retrieveMemberById(user.getString("userID")).queue(member -> {
-				if (member.getRoles().contains(role)) {
-					g.removeRoleFromMember(member, role).queue();
-				} else {
-					final ZonedDateTime birthday = ZonedDateTime.parse(user.getString("birthday"), inputFormat);
-					
-					if (today.getMonth() == birthday.getMonth() && today.getDayOfMonth() == birthday.getDayOfMonth()) {
-						g.addRoleToMember(member, role);
-						g.getTextChannelById(Bot.getBaseConfig().BIRTHDAY_CHANNEL).sendMessage(Bot.getBaseConfig().BIRTHDAY_MESSAGE.replace("%user%", member.getAsMention()));
+
+			// The parsed date
+			
+			ZonedDateTime today = ZonedDateTime.now();
+			users.forEach(obj -> {
+				JSONObject user = (JSONObject) obj;
+				//System.out.println(user.toString());
+				g.retrieveMemberById(user.getString("userID")).queue(member -> {
+					if (member.getRoles().contains(role)) {
+						g.removeRoleFromMember(member, role).queue();
+					} else {
+						final LocalDate birthday = LocalDate.parse(user.getString("birthday"), inputFormat);
+						//System.out.println(today.getMonth() + "=" + birthday.getMonth() + ", " + today.getDayOfMonth() + "=" + birthday.getDayOfMonth());
+						if (today.getMonth() == birthday.getMonth() && today.getDayOfMonth() == birthday.getDayOfMonth()) {
+							System.out.println("Adding role");
+							g.addRoleToMember(member, role).queue();
+							g.getTextChannelById(Bot.getBaseConfig().BIRTHDAY_CHANNEL).sendMessage(Bot.getBaseConfig().BIRTHDAY_MESSAGE.replace("%user%", member.getAsMention()));
+						}
 					}
-				}
-				
+					
+				});
 			});
-		});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 

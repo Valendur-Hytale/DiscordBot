@@ -19,6 +19,7 @@ import de.valendur.discordbot.handlers.CommandHandler;
 import de.valendur.discordbot.handlers.ConfigHandler;
 import de.valendur.discordbot.handlers.LevelingHandler;
 import de.valendur.discordbot.handlers.ReactionEmoteRoleHandler;
+import de.valendur.discordbot.tasks.DailyBirthdayChecker;
 import de.valendur.discordbot.tasks.DailyLevelingResetTask;
 import de.valendur.discordbot.tasks.DailyWebsiteFixer;
 import de.valendur.discordbot.tasks.VoiceCheckTask;
@@ -66,7 +67,7 @@ public class Bot extends ListenerAdapter {
 	                    .addEventListeners(commandHandler)
 	                    .addEventListeners(new BirthdayCommand())
 	                    //.addEventListeners(new MessageSecurity())
-	                    //.addEventListeners(reactionEmoteRoleHandler)
+	                    .addEventListeners(reactionEmoteRoleHandler)
 	                    .addEventListeners(levelingHandler)
 	                    .enableIntents(GatewayIntent.GUILD_MEMBERS)
 	                    .setMemberCachePolicy(MemberCachePolicy.ALL)
@@ -189,12 +190,15 @@ public class Bot extends ListenerAdapter {
 					getBaseConfig().SCHEDULING_LEVELING_RESET_MINUTE, 
 					getBaseConfig().SCHEDULING_LEVELING_RESET_SECOND));
 		 
+		 final ScheduledTaskExecutor dailyBirthdayCheck = new ScheduledTaskExecutor(new DailyBirthdayChecker(0, 0, 0));
+		 
 		 final RepeatedTaskExecutor voiceCheck = new RepeatedTaskExecutor(new VoiceCheckTask(getBaseConfig().SCHEDULING_VOICE_CHECK));
 		 
 		 
 		 taskExecutors.add(dailyReset);
 		 taskExecutors.add(dailyWebsiteFix);
 		 taskExecutors.add(voiceCheck);
+		 taskExecutors.add(dailyBirthdayCheck);
 	 }
 	 
 	 

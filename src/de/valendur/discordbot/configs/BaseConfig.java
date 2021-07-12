@@ -25,6 +25,11 @@ public class BaseConfig extends GenericConfig {
 		BACKEND_LINK = config.getString("BACKEND_LINK");
 		ERROR_CHANNEL = config.getString("ERROR_CHANNEL");
 		
+		
+		BIRTHDAY_CHANNEL = config.getString("BIRTHDAY_CHANNEL");
+		BIRTHDAY_MESSAGE = config.getString("BIRTHDAY_MESSAGE");
+		BIRTHDAY_ROLE_ID = config.getString("BIRTHDAY_ROLE_ID");
+		
 		JSONObject SCHEDULING = config.getJSONObject("SCHEDULER");
 		
 		JSONObject SCHEDULING_LEVELING_RESET = SCHEDULING.getJSONObject("LEVELING_RESET");
