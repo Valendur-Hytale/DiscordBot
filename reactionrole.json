@@ -21,5 +21,9 @@
         }
       ]
     }
+  ],
+  "EXCLUSIVE" : [
+  		["rolea","roleb","rolec"],
+  		["rolex","rolez"],
   ]
 }

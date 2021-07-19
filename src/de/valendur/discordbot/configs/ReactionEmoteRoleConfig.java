@@ -1,6 +1,7 @@
 package de.valendur.discordbot.configs;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.valendur.discordbot.reactionrole.ReactionEmoteRole;
@@ -11,6 +12,8 @@ import kong.unirest.json.JSONObject;
 public class ReactionEmoteRoleConfig extends GenericConfig {
 	
 	private List<ReactionMessage> REACTION_MESSAGES = new ArrayList<ReactionMessage>();
+	private HashMap<String,List<String>> EXCLUSIVE_ROLE = new HashMap<>();
+	
 	
 	public ReactionEmoteRoleConfig(ConfigType type) {
 		super(type);
@@ -38,6 +41,21 @@ public class ReactionEmoteRoleConfig extends GenericConfig {
 			
 			REACTION_MESSAGES.add(reactionMessage);
 		}
+		
+		JSONArray exclusive = config.getJSONArray("EXCLUSIVE");
+		
+		for (int i = 0; i < exclusive.length(); i++) {
+			JSONArray exc = exclusive.getJSONArray(i);
+			for (int ii = 0; ii < exc.length(); ii++) {
+				String roleID = exc.getString(ii);
+				List list = exc.toList();
+				list.remove(ii);
+				EXCLUSIVE_ROLE.put(roleID, list);
+			}
+			
+		}
+		
+		
 	}
 	
 	public List<ReactionMessage> getReactionMessages() {

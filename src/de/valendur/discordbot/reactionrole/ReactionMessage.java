@@ -66,19 +66,18 @@ public class ReactionMessage {
 		TextChannel channel = guild.getTextChannelById(channelID);
 		Message message = channel.retrieveMessageById(messageID).complete();
 		List<String> emotes = new ArrayList<String>();
-		message.addReaction("😄").queue();
 		for (ReactionEmoteRole emoteRole : emoteRoles) {
 			
 			message.addReaction(emoteRole.getEmote()).queue();
 			emotes.add(emoteRole.getEmote());
 			System.out.println("EmOJI: " + emoteRole.getEmote());
 		}
+		//message = channel.retrieveMessageById(messageID).complete();
+		
 		for (MessageReaction reaction : message.getReactions()) {
 			final String emoteString = getIDfromReaction(reaction);
 			if (!emotes.contains(emoteString)) {
-				
 				if (reaction.getReactionEmote().isEmoji()) {
-					
 					message.clearReactions(reaction.getReactionEmote().getEmoji()).queue();
 				} else {
 					message.clearReactions(reaction.getReactionEmote().getEmote()).queue();
@@ -96,7 +95,7 @@ public class ReactionMessage {
 			System.out.println("is emoji");
 			return reaction.getReactionEmote().getEmoji().toLowerCase();
 		} else {
-			return reaction.getReactionEmote().getEmote().getId();
+			return ":" + reaction.getReactionEmote().getName() + ":" + reaction.getReactionEmote().getEmote().getId();
 		}
 	}
 	
