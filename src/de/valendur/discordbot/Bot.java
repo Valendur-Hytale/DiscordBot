@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashSet;
 import javax.security.auth.login.LoginException;
 
+import com.github.twitch4j.TwitchClient;
+
 import de.valendur.discordbot.commands.BirthdayCommand;
 import de.valendur.discordbot.commands.EXPCommand;
 import de.valendur.discordbot.commands.MeditateCommand;
@@ -20,6 +22,7 @@ import de.valendur.discordbot.handlers.CommandHandler;
 import de.valendur.discordbot.handlers.ConfigHandler;
 import de.valendur.discordbot.handlers.LevelingHandler;
 import de.valendur.discordbot.handlers.ReactionEmoteRoleHandler;
+import de.valendur.discordbot.handlers.TwitchHandler;
 import de.valendur.discordbot.tasks.DailyBirthdayChecker;
 import de.valendur.discordbot.tasks.DailyLevelingResetTask;
 import de.valendur.discordbot.tasks.DailyWebsiteFixer;
@@ -49,7 +52,7 @@ public class Bot extends ListenerAdapter {
 	public static ConfigHandler configHandler;
 	public static ReactionEmoteRoleHandler reactionEmoteRoleHandler;
 	public static LevelingHandler levelingHandler;
-	
+	public static TwitchHandler twitchHandler;
 	public static HashSet<Object> taskExecutors = new HashSet<Object>();
 	
 	
@@ -86,8 +89,11 @@ public class Bot extends ListenerAdapter {
 	            e.printStackTrace();
 	        }
 	        
-	        setupHandlers();
+	        
+	        
 	        createCommands();
+	        setupHandlers(); //might fail so nothing afterwards, TODO improve this shit lol
+	       
 	    }
 	 
 	 public static BaseConfig getBaseConfig() {
@@ -107,6 +113,8 @@ public class Bot extends ListenerAdapter {
 		 initCommands();
 		 reactionEmoteRoleHandler = new ReactionEmoteRoleHandler();
 		 levelingHandler = new LevelingHandler();
+		 twitchHandler = new TwitchHandler();
+		 
 	 }
 	 
 	 @Deprecated
@@ -205,8 +213,11 @@ public class Bot extends ListenerAdapter {
 	 
 	 
 	 public static void setupHandlers() {
-		 reactionEmoteRoleHandler.setup(getGuild());
 		 levelingHandler.setup(getGuild());
+		 twitchHandler.setup(getGuild());
+		 
+		 
+		 reactionEmoteRoleHandler.setup(getGuild());
 	 }
 	 
 	 public static void initUnirest() {

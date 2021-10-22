@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/de/valendur/discordbot/handlers/TwitchHandler.java=UTF-8
 encoding//src/de/valendur/discordbot/reactionrole/ReactionMessage.java=UTF-8
 encoding/motivation.txt=UTF-8
 encoding/reactionrole.json=UTF-8

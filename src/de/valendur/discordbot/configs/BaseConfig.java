@@ -4,15 +4,12 @@ import kong.unirest.json.JSONObject;
 
 public class BaseConfig extends GenericConfig {
 
-	public String COMMAND_PREFIX;
-	public String BACKEND_LINK;
-	public String ERROR_CHANNEL;
-	public String BIRTHDAY_CHANNEL;
-	public String BIRTHDAY_MESSAGE;
-	public String BIRTHDAY_ROLE_ID;
+	public String COMMAND_PREFIX, BACKEND_LINK, ERROR_CHANNEL, BIRTHDAY_CHANNEL,
+					BIRTHDAY_MESSAGE, BIRTHDAY_ROLE_ID, TWITCH_ANNOUNCEMENT_CHANNEL,
+					SM_ROLE_ID, TWITCH_CHANNEL_NAME;
 	
-	public int SCHEDULING_LEVELING_RESET_HOUR, SCHEDULING_LEVELING_RESET_MINUTE, SCHEDULING_LEVELING_RESET_SECOND;
-	public int SCHEDULING_VOICE_CHECK;
+	public int SCHEDULING_LEVELING_RESET_HOUR, SCHEDULING_LEVELING_RESET_MINUTE, SCHEDULING_LEVELING_RESET_SECOND,
+			SCHEDULING_VOICE_CHECK;
 	
 	public BaseConfig(ConfigType type) {
 		super(type);
@@ -26,9 +23,13 @@ public class BaseConfig extends GenericConfig {
 		ERROR_CHANNEL = config.getString("ERROR_CHANNEL");
 		
 		
+		
 		BIRTHDAY_CHANNEL = config.getString("BIRTHDAY_CHANNEL");
 		BIRTHDAY_MESSAGE = config.getString("BIRTHDAY_MESSAGE");
 		BIRTHDAY_ROLE_ID = config.getString("BIRTHDAY_ROLE_ID");
+		TWITCH_ANNOUNCEMENT_CHANNEL = config.getString("TWITCH_ANNOUNCEMENT_CHANNEL");
+		TWITCH_CHANNEL_NAME = config.getString("TWITCH_CHANNEL_NAME");
+		SM_ROLE_ID = config.getString("SM_ROLE_ID");
 		
 		JSONObject SCHEDULING = config.getJSONObject("SCHEDULER");
 		
