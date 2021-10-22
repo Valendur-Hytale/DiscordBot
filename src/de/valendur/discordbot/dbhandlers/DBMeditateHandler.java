@@ -1,6 +1,8 @@
 package de.valendur.discordbot.dbhandlers;
 
+import de.valendur.discordbot.commands.MeditateCommand;
 import de.valendur.discordbot.handlers.LevelingHandler;
+import de.valendur.discordbot.handlers.RandomHandler;
 import kong.unirest.Unirest;
 import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
@@ -15,10 +17,10 @@ public class DBMeditateHandler {
 		json.put("userID", ""+id);
 		json.put("meditateTime", meditateTime);
 		
-		Unirest.post("members/addExp").body(json).asJsonAsync(response -> {
+		Unirest.post("members/addMeditateTime").body(json).asJsonAsync(response -> {
 			System.out.println(response.getBody().getObject().toString());
 			JSONObject user = response.getBody().getObject();
-			channel.sendMessage("Du hast schon " + user.getInt("meditateTime") + " minuten meditiert! [Hier Random Text einfügen]").queue();
+			channel.sendMessage("Du hast schon " + user.getInt("meditateTime") + " minuten meditiert! " + MeditateCommand.motivationLines.get(RandomHandler.randInt(0, 119))).queue();
 		});
 	}
 	

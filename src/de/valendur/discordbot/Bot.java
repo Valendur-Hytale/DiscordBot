@@ -6,6 +6,7 @@ import javax.security.auth.login.LoginException;
 
 import de.valendur.discordbot.commands.BirthdayCommand;
 import de.valendur.discordbot.commands.EXPCommand;
+import de.valendur.discordbot.commands.MeditateCommand;
 import de.valendur.discordbot.commands.PingCommand;
 import de.valendur.discordbot.commands.ReloadCommand;
 import de.valendur.discordbot.commands.WaitCommand;
@@ -110,11 +111,12 @@ public class Bot extends ListenerAdapter {
 	 
 	 @Deprecated
 	 public static void initCommands() {
-		 commandHandler = new CommandHandler("!!!");
+		 commandHandler = new CommandHandler("!");
 		 commandHandler.addCommand(new PingCommand("ping"));
 		 commandHandler.addCommand(new ReloadCommand("reload"));
 		 commandHandler.addCommand(new EXPCommand("xp"));
 		 commandHandler.addCommand(new WaitCommand("wait"));
+		 commandHandler.addCommand(new MeditateCommand("med"));
 	 }
 	 
 	 public static void createCommands() {
