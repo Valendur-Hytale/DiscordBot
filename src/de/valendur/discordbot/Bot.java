@@ -4,11 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import javax.security.auth.login.LoginException;
 
-import de.valendur.discordbot.commands.BirthdayCommand;
-import de.valendur.discordbot.commands.EXPCommand;
-import de.valendur.discordbot.commands.PingCommand;
-import de.valendur.discordbot.commands.ReloadCommand;
-import de.valendur.discordbot.commands.WaitCommand;
+import de.valendur.discordbot.commands.*;
 import de.valendur.discordbot.configs.BaseConfig;
 import de.valendur.discordbot.configs.ConfigType;
 import de.valendur.discordbot.configs.LevelingConfig;
@@ -53,8 +49,7 @@ public class Bot extends ListenerAdapter {
 	
 	
 	
-	 @SuppressWarnings("deprecation")
-	public static void main(String[] args ) {
+	 public static void main(String[] args ) {
 		 initHandlers();
 		 initConfigs();
 		 initUnirest();
@@ -77,15 +72,12 @@ public class Bot extends ListenerAdapter {
 
 	            
 	        }
-	        catch (LoginException e){
+	        catch (LoginException | InterruptedException e){
 
 	            e.printStackTrace();
 	        }
-	        catch (InterruptedException e) {
-	            e.printStackTrace();
-	        }
-	        
-	        setupHandlers();
+
+		 setupHandlers();
 	        createCommands();
 	    }
 	 
@@ -115,6 +107,7 @@ public class Bot extends ListenerAdapter {
 		 commandHandler.addCommand(new ReloadCommand("reload"));
 		 commandHandler.addCommand(new EXPCommand("xp"));
 		 commandHandler.addCommand(new WaitCommand("wait"));
+		 commandHandler.addCommand(new TopCommand("top"));
 	 }
 	 
 	 public static void createCommands() {
