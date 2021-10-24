@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import de.valendur.discordbot.Bot;
 import de.valendur.discordbot.Utils;
 import de.valendur.discordbot.configs.ConfigType;
+import de.valendur.discordbot.configs.LevelRoleConfig;
 import de.valendur.discordbot.configs.LevelingConfig;
 import de.valendur.discordbot.dbhandlers.DBLevelingHandler;
 import de.valendur.discordbot.levelling.LevelingUser;
@@ -125,25 +126,26 @@ public class LevelingHandler extends ListenerAdapter {
 	 * @param user
 	 */
 	public static void announcementUserLevelUp(JSONObject user) {
+		LevelRoleConfig config = Bot.getLevelRoleConfig();
 		Guild guild =  Bot.getGuild();
 		Member lvlupMember = guild.retrieveMemberById(user.getInt("userID")).complete();
 		int currentLvl = user.getInt("currentLevel");
-		Role levelfive = guild.getRoleById(785186235412906024L);
-		Role levelten = guild.getRoleById(785186236901097482L);
-		Role levelfifteen = guild.getRoleById(785186237853335562L);
-		Role leveltwentyfive = guild.getRoleById(785186239006638121L);
-		Role levelthirtyfive = guild.getRoleById(901610968520462367L);
-		Role levelfifty = guild.getRoleById(785186240688291850L);
-		Role levelseventyfive = guild.getRoleById(785186243074850846L);
-		Role levelhundred = guild.getRoleById(785186244116217887L);
-		Role levelhundredtwentyfive = guild.getRoleById(785186245591957534L);
-		Role levelhundredfifty = guild.getRoleById(785186249039937558L);
-		Role levelhundredseventyfive = guild.getRoleById(785186241687584769L);
-		Role leveltwohundred = guild.getRoleById(785186248272379914L);
+		Role levelfive = config.getAsRole(5);
+		Role levelten = config.getAsRole(10);
+		Role levelfifteen = config.getAsRole(15);
+		Role leveltwentyfive = config.getAsRole(25);
+		Role levelthirtyfive = config.getAsRole(35);
+		Role levelfifty = config.getAsRole(50);
+		Role levelseventyfive = config.getAsRole(75);
+		Role levelhundred = config.getAsRole(100);
+		Role levelhundredtwentyfive = config.getAsRole(125);
+		Role levelhundredfifty = config.getAsRole(150);
+		Role levelhundredseventyfive = config.getAsRole(175);
+		Role leveltwohundred = config.getAsRole(200);
 		if(currentLvl == 5){
-			Role games = guild.getRoleById(729763053964623933L);
-			Role aboutme = guild.getRoleById(729761498276298953L);
-			Role hobbies = guild.getRoleById(785173758750621728L);
+			Role games = guild.getRoleById(config.GAMES_ROLE_ID);
+			Role aboutme = guild.getRoleById(config.ABOUT_ME_ROLE_ID);
+			Role hobbies = guild.getRoleById(config.HOBBIES_ROLE_ID);
 			lvlupMember.getRoles().add(games);
 			lvlupMember.getRoles().add(aboutme);
 			lvlupMember.getRoles().add(hobbies);

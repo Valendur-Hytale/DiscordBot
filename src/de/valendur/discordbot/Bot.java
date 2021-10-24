@@ -9,12 +9,7 @@ import de.valendur.discordbot.commands.EXPCommand;
 import de.valendur.discordbot.commands.PingCommand;
 import de.valendur.discordbot.commands.ReloadCommand;
 import de.valendur.discordbot.commands.WaitCommand;
-import de.valendur.discordbot.configs.BaseConfig;
-import de.valendur.discordbot.configs.ConfigType;
-import de.valendur.discordbot.configs.LevelingConfig;
-import de.valendur.discordbot.configs.ReactionEmoteRoleConfig;
-import de.valendur.discordbot.configs.SecurityConfig;
-import de.valendur.discordbot.configs.TokenConfig;
+import de.valendur.discordbot.configs.*;
 import de.valendur.discordbot.handlers.CommandHandler;
 import de.valendur.discordbot.handlers.ConfigHandler;
 import de.valendur.discordbot.handlers.LevelingHandler;
@@ -99,6 +94,8 @@ public class Bot extends ListenerAdapter {
 	 public static TokenConfig getTokenConfig() {
 		 return (TokenConfig) configHandler.getConfig(ConfigType.TOKEN_CONFIG);
 	 }
+
+	 public static LevelRoleConfig getLevelRoleConfig() {return (LevelRoleConfig) configHandler.getConfig(ConfigType.LEVEL_ROLE_CONFIG);}
 	 
 	 public static void initHandlers() {
 		 initConfigs();
@@ -176,6 +173,7 @@ public class Bot extends ListenerAdapter {
 		 configHandler.addConfig(new LevelingConfig(ConfigType.LEVELING_CONFIG));
 		 configHandler.addConfig(new SecurityConfig(ConfigType.SECURITY_CONFIG));
 		 configHandler.addConfig(new TokenConfig(ConfigType.TOKEN_CONFIG));
+		 configHandler.addConfig(new LevelRoleConfig(ConfigType.LEVEL_ROLE_CONFIG));
 		 
 		 configHandler.load();
 	 }

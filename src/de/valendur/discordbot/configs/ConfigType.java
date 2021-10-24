@@ -8,7 +8,8 @@ public enum ConfigType {
     TOKEN_CONFIG("Token Config", "token.json"),
     LEVELING_CONFIG("Level Config", "levelling.json"),
     DB_CONFIG("Backend Config", "db.json"),
-    SECURITY_CONFIG("Security Config", "security.json");
+    SECURITY_CONFIG("Security Config", "security.json"),
+    LEVEL_ROLE_CONFIG("Level Role Config", "levelrole.json");
 
     private String name;
     private String fileName;
