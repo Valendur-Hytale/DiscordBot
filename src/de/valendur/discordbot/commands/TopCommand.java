@@ -22,24 +22,40 @@ public class TopCommand extends GenericCommand {
 
     @Override
     public void execute(GuildMessageReceivedEvent e, String commandParams) {
-        switch (commandParams) {
+        e.getMessage().addReaction("✅").queue();
+        switch (commandParams.toLowerCase().trim()) {
             case "daily":
-                e.getChannel().sendMessage(buildTop("dailyExp", 0,10, "Daily Top 10/100").build()).queue();
-                break;
-            case "weekly":
-                e.getChannel().sendMessage(buildTop("weeklyExp", 0,10, "Weekly Top 10/100").build()).queue();
-                break;
-            case "monthly":
-                e.getChannel().sendMessage(buildTop("monthlyExp", 0,10, "Monthly Top 10/100").build()).queue();
-                break;
-            case "all":
-                e.getChannel().sendMessage(buildTop("exp",0, 10, "Top 10/100").build()).queue(message -> {
-                    message.addReaction("◀️").queueAfter(2, TimeUnit.MILLISECONDS);
-                    message.addReaction("▶️").queueAfter(2, TimeUnit.MILLISECONDS);
+                e.getChannel().sendMessage(buildTop("dailyExp", 0,5, "Daily Top 5/100").build()).queue(message -> {
+                    message.addReaction("◀️").queue(message1 -> {
+                        message.addReaction("▶️").queue();
+                    });
 
                 });
                 break;
+            case "weekly":
+                e.getChannel().sendMessage(buildTop("weeklyExp", 0,5, "Weekly Top 5/100").build()).queue(message -> {
+                    message.addReaction("◀️").queue(message1 -> {
+                        message.addReaction("▶️").queue();
+                    });
+
+                });
+                break;
+            case "monthly":
+                e.getChannel().sendMessage(buildTop("monthlyExp", 0,5, "Monthly Top 5/100").build()).queue(message -> {
+                    message.addReaction("◀️").queue(message1 -> {
+                        message.addReaction("▶️").queue();
+                    });
+
+                });
+                break;
+            case "all":
             default:
+                e.getChannel().sendMessage(buildTop("currentExp",0, 5, "Top 5/100").build()).queue(message -> {
+                    message.addReaction("◀️").queue(message1 -> {
+                        message.addReaction("▶️").queue();
+                    });
+
+                });
                 break;
         }
     }
@@ -64,9 +80,18 @@ public class TopCommand extends GenericCommand {
         EmbedBuilder builder = new EmbedBuilder();
         builder.setDescription(description);
         builder.setTimestamp(Instant.now());
-        for (int i = startIndex; i < amount; i++) {
-            JSONObject user = sortedMember.getJSONObject(i);
-            builder.appendDescription("\n" + i + ". " + user.getString("profileName") + " " + user.getString("level") + " " + user.getString("exp"));
+        for (int i = startIndex; i < (startIndex+amount); i++) {
+            JSONObject sortedUser = sortedMember.getJSONObject(i);
+            JSONObject user = DBLevelingHandler.getUser(sortedUser.getLong("userID"));
+            int currentExp = user.getInt("currentExp") - user.getInt("expForCurrentLevel");
+            int currentLevel = user.getInt("currentLevel");
+            String profileName = user.getString("profileName") != null ? user.getString("profileName") : "";
+
+            String desc = "\n" + (i+1) + ". " + profileName +
+                    "\nLevel: " + currentLevel +
+                    "\nXP: " + currentExp +
+                    "\n";
+            builder.appendDescription(desc);
         }
         return builder;
     }
@@ -84,19 +109,17 @@ public class TopCommand extends GenericCommand {
 
             @Override
             public int compare(JSONObject a, JSONObject b) {
-                String valA = "";
-                String valB = "";
+                int valA = 0;
+                int valB = 0;
 
                 try {
-                    valA = (String) a.get(KEY_NAME);
-                    valB = (String) b.get(KEY_NAME);
+                    valA = a.getInt(KEY_NAME);
+                    valB = b.getInt(KEY_NAME);
                 } catch (JSONException e) {
                     //do something
                 }
 
-                return valA.compareTo(valB);
-                //if you want to change the sort order, simply use the following:
-                //return -valA.compareTo(valB);
+                return -Integer.compare(valA,valB);
             }
         });
 
