@@ -15,10 +15,7 @@ import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberLeaveEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
@@ -123,9 +120,68 @@ public class LevelingHandler extends ListenerAdapter {
 		user.setVoiceState(inVoice);
 	}
 
+	/**
+	 * Temporarily Stores the Roles in here gets outsourced to a Config
+	 * @param user
+	 */
 	public static void announcementUserLevelUp(JSONObject user) {
-//		Bot2.getGuild().getTextChannelById(getConfig().LEVELING_ANNOUNCEMENT_CHANNEL)
-//			.sendMessage("Herzlichen Glückwunsch <@" + user.getString("userID") + ">! Du bist zu Level " + user.getString("currentLevel") + " aufgestiegen!")
-//			.queue();
+		Guild guild =  Bot.getGuild();
+		Member lvlupMember = guild.retrieveMemberById(user.getInt("userID")).complete();
+		int currentLvl = user.getInt("currentLevel");
+		Role levelfive = guild.getRoleById(785186235412906024L);
+		Role levelten = guild.getRoleById(785186236901097482L);
+		Role levelfifteen = guild.getRoleById(785186237853335562L);
+		Role leveltwentyfive = guild.getRoleById(785186239006638121L);
+		Role levelthirtyfive = guild.getRoleById(901610968520462367L);
+		Role levelfifty = guild.getRoleById(785186240688291850L);
+		Role levelseventyfive = guild.getRoleById(785186243074850846L);
+		Role levelhundred = guild.getRoleById(785186244116217887L);
+		Role levelhundredtwentyfive = guild.getRoleById(785186245591957534L);
+		Role levelhundredfifty = guild.getRoleById(785186249039937558L);
+		Role levelhundredseventyfive = guild.getRoleById(785186241687584769L);
+		Role leveltwohundred = guild.getRoleById(785186248272379914L);
+		if(currentLvl == 5){
+			Role games = guild.getRoleById(729763053964623933L);
+			Role aboutme = guild.getRoleById(729761498276298953L);
+			Role hobbies = guild.getRoleById(785173758750621728L);
+			lvlupMember.getRoles().add(games);
+			lvlupMember.getRoles().add(aboutme);
+			lvlupMember.getRoles().add(hobbies);
+			lvlupMember.getRoles().add(levelfive);
+		} else if(currentLvl == 10){
+			lvlupMember.getRoles().remove(levelfive);
+			lvlupMember.getRoles().add(levelten);
+		} else if(currentLvl == 15){
+			lvlupMember.getRoles().remove(levelten);
+			lvlupMember.getRoles().add(levelfifteen);
+		} else if(currentLvl == 25){
+			lvlupMember.getRoles().remove(levelfifteen);
+			lvlupMember.getRoles().add(leveltwentyfive);
+		} else if(currentLvl == 35){
+			lvlupMember.getRoles().remove(leveltwentyfive);
+			lvlupMember.getRoles().add(levelthirtyfive);
+		} else if(currentLvl == 50){
+			lvlupMember.getRoles().remove(levelthirtyfive);
+			lvlupMember.getRoles().add(levelfifty);
+		} else if(currentLvl == 75){
+			lvlupMember.getRoles().remove(levelfifty);
+			lvlupMember.getRoles().add(levelseventyfive);
+		} else if(currentLvl == 100){
+			lvlupMember.getRoles().remove(levelseventyfive);
+			lvlupMember.getRoles().add(levelhundred);
+		} else if(currentLvl == 125){
+			lvlupMember.getRoles().remove(levelhundred);
+			lvlupMember.getRoles().add(levelhundredtwentyfive);
+		} else if(currentLvl == 150){
+			lvlupMember.getRoles().remove(levelhundredtwentyfive);
+			lvlupMember.getRoles().add(levelhundredfifty);
+		} else if(currentLvl == 175){
+			lvlupMember.getRoles().remove(levelhundredfifty);
+			lvlupMember.getRoles().add(levelhundredseventyfive);
+		} else if(currentLvl == 200){
+			lvlupMember.getRoles().remove(levelhundredseventyfive);
+			lvlupMember.getRoles().add(leveltwohundred);
+		}
+
 	}
 }
