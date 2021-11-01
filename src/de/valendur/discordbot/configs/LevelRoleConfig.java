@@ -13,37 +13,34 @@ public class LevelRoleConfig extends GenericConfig{
     public LevelRoleConfig(ConfigType type) {
         super(type);
     }
-
-    public Map<Integer,Long> LEVEL_ROLE_ID = new HashMap<>();
-    public long GAMES_ROLE_ID;
-    public long ABOUT_ME_ROLE_ID;
-    public long HOBBIES_ROLE_ID;
+    public Map<String,Long> LEVEL_ROLES = new HashMap<>();
 
 
     @Override
     public void load() {
         JSONObject config = readConfig();
+        JSONObject level = config.getJSONObject("ROLES");
 
-        GAMES_ROLE_ID = config.getLong("GAMES_ROLE");
-        ABOUT_ME_ROLE_ID = config.getLong("ABOUT_ME_ROLE");
-        HOBBIES_ROLE_ID = config.getLong("HOBBIES_ROLE");
-        LEVEL_ROLE_ID.put(5,config.getLong("LEVEL_5"));
-        LEVEL_ROLE_ID.put(10,config.getLong("LEVEL_10"));
-        LEVEL_ROLE_ID.put(15,config.getLong("LEVEL_15"));
-        LEVEL_ROLE_ID.put(25,config.getLong("LEVEL_25"));
-        LEVEL_ROLE_ID.put(35,config.getLong("LEVEL_35"));
-        LEVEL_ROLE_ID.put(50,config.getLong("LEVEL_50"));
-        LEVEL_ROLE_ID.put(75,config.getLong("LEVEL_75"));
-        LEVEL_ROLE_ID.put(100,config.getLong("LEVEL_100"));
-        LEVEL_ROLE_ID.put(125,config.getLong("LEVEL_125"));
-        LEVEL_ROLE_ID.put(150,config.getLong("LEVEL_150"));
-        LEVEL_ROLE_ID.put(175,config.getLong("LEVEL_175"));
-        LEVEL_ROLE_ID.put(200,config.getLong("LEVEL_200"));
+        //If somebody messes it up everything will work like intended
+        if(level == null) {
+            return;
+        }
 
+        //Goes through every key within the Array and puts it with its Value in the List
+        level.keySet().forEach(lvl -> {
+            LEVEL_ROLES.put(lvl, level.getLong(lvl));
+        });
     }
 
-    public Role getAsRole(int level){
-        Guild guild =  Bot.getGuild();
-        return guild.getRoleById(LEVEL_ROLE_ID.get(level));
+    /**
+     * @param role The Role name like set in the Config
+     * @return The Role which corespondents to the role/level
+     */
+    public Role getAsRole(String role) {
+        Guild guild = Bot.getGuild();
+        if(LEVEL_ROLES.get(role) != null) {
+            return guild.getRoleById(LEVEL_ROLES.get(role));
+        }
+        return null;
     }
 }

@@ -9,7 +9,6 @@ public class VoiceCheckTask extends GenericRepeatedTask {
 
 	public VoiceCheckTask(int seconds) {
 		super(seconds);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

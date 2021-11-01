@@ -200,7 +200,6 @@ public class EXPCommand extends GenericCommand{
 		try {
 			in = ImageIO.read(new File("profile.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -218,7 +217,6 @@ public class EXPCommand extends GenericCommand{
 		try {
 			return ImageIO.read(new URL(url));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -229,7 +227,6 @@ public class EXPCommand extends GenericCommand{
 		try {
 			ImageIO.write(image, "png", baos);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -237,7 +234,6 @@ public class EXPCommand extends GenericCommand{
 		try {
 			baos.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return array;

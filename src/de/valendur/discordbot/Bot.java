@@ -62,7 +62,7 @@ public class Bot extends ListenerAdapter {
 	                    .addEventListeners(commandHandler)
 	                    .addEventListeners(new BirthdayCommand())
 	                    //.addEventListeners(new MessageSecurity())
-	                    .addEventListeners(reactionEmoteRoleHandler)
+	                    //.addEventListeners(reactionEmoteRoleHandler)
 	                    .addEventListeners(levelingHandler)
 	                    .enableIntents(GatewayIntent.GUILD_MEMBERS)
 	                    .setMemberCachePolicy(MemberCachePolicy.ALL)
@@ -100,7 +100,7 @@ public class Bot extends ListenerAdapter {
 	 public static void initHandlers() {
 		 initConfigs();
 		 initCommands();
-		 reactionEmoteRoleHandler = new ReactionEmoteRoleHandler();
+		 //reactionEmoteRoleHandler = new ReactionEmoteRoleHandler();
 		 levelingHandler = new LevelingHandler();
 	 }
 	 
@@ -163,13 +163,14 @@ public class Bot extends ListenerAdapter {
 	        );*/
 
 	        // Send the new set of commands to discord, this will override any existing global commands with the new set provided here
+
 	        commands.queue();
 	 }
 	 
 	 public static void initConfigs() {
 		 configHandler = new ConfigHandler();
 		 configHandler.addConfig(new BaseConfig(ConfigType.BASE_CONFIG));
-		 configHandler.addConfig(new ReactionEmoteRoleConfig(ConfigType.REACTION_ROLE_CONFIG));
+		 //configHandler.addConfig(new ReactionEmoteRoleConfig(ConfigType.REACTION_ROLE_CONFIG));
 		 configHandler.addConfig(new LevelingConfig(ConfigType.LEVELING_CONFIG));
 		 configHandler.addConfig(new SecurityConfig(ConfigType.SECURITY_CONFIG));
 		 configHandler.addConfig(new TokenConfig(ConfigType.TOKEN_CONFIG));
@@ -200,7 +201,7 @@ public class Bot extends ListenerAdapter {
 	 
 	 
 	 public static void setupHandlers() {
-		 reactionEmoteRoleHandler.setup(getGuild());
+		 //reactionEmoteRoleHandler.setup(getGuild());
 		 levelingHandler.setup(getGuild());
 	 }
 	 

@@ -130,22 +130,24 @@ public class LevelingHandler extends ListenerAdapter {
 		Guild guild =  Bot.getGuild();
 		Member lvlupMember = guild.retrieveMemberById(user.getInt("userID")).complete();
 		int currentLvl = user.getInt("currentLevel");
-		Role levelfive = config.getAsRole(5);
-		Role levelten = config.getAsRole(10);
-		Role levelfifteen = config.getAsRole(15);
-		Role leveltwentyfive = config.getAsRole(25);
-		Role levelthirtyfive = config.getAsRole(35);
-		Role levelfifty = config.getAsRole(50);
-		Role levelseventyfive = config.getAsRole(75);
-		Role levelhundred = config.getAsRole(100);
-		Role levelhundredtwentyfive = config.getAsRole(125);
-		Role levelhundredfifty = config.getAsRole(150);
-		Role levelhundredseventyfive = config.getAsRole(175);
-		Role leveltwohundred = config.getAsRole(200);
+
+		Role levelfive = config.getAsRole("5");
+		Role levelten = config.getAsRole("10");
+		Role levelfifteen = config.getAsRole("15");
+		Role leveltwentyfive = config.getAsRole("25");
+		Role levelthirtyfive = config.getAsRole("35");
+		Role levelfifty = config.getAsRole("50");
+		Role levelseventyfive = config.getAsRole("75");
+		Role levelhundred = config.getAsRole("100");
+		Role levelhundredtwentyfive = config.getAsRole("125");
+		Role levelhundredfifty = config.getAsRole("150");
+		Role levelhundredseventyfive = config.getAsRole("175");
+		Role leveltwohundred = config.getAsRole("200");
+
 		if(currentLvl == 5){
-			Role games = guild.getRoleById(config.GAMES_ROLE_ID);
-			Role aboutme = guild.getRoleById(config.ABOUT_ME_ROLE_ID);
-			Role hobbies = guild.getRoleById(config.HOBBIES_ROLE_ID);
+			Role games = config.getAsRole("GAMES");
+			Role aboutme = config.getAsRole("ABOUT_ME");
+			Role hobbies = config.getAsRole("HOBBIES");
 			lvlupMember.getRoles().add(games);
 			lvlupMember.getRoles().add(aboutme);
 			lvlupMember.getRoles().add(hobbies);
