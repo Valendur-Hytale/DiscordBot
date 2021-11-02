@@ -4,16 +4,9 @@ import java.util.Date;
 import java.util.HashSet;
 import javax.security.auth.login.LoginException;
 
-import de.valendur.discordbot.commands.BirthdayCommand;
-import de.valendur.discordbot.commands.EXPCommand;
-import de.valendur.discordbot.commands.PingCommand;
-import de.valendur.discordbot.commands.ReloadCommand;
-import de.valendur.discordbot.commands.WaitCommand;
+import de.valendur.discordbot.commands.*;
 import de.valendur.discordbot.configs.*;
-import de.valendur.discordbot.handlers.CommandHandler;
-import de.valendur.discordbot.handlers.ConfigHandler;
-import de.valendur.discordbot.handlers.LevelingHandler;
-import de.valendur.discordbot.handlers.ReactionEmoteRoleHandler;
+import de.valendur.discordbot.handlers.*;
 import de.valendur.discordbot.tasks.DailyBirthdayChecker;
 import de.valendur.discordbot.tasks.DailyLevelingResetTask;
 import de.valendur.discordbot.tasks.DailyWebsiteFixer;
@@ -43,7 +36,8 @@ public class Bot extends ListenerAdapter {
 	public static ConfigHandler configHandler;
 	public static ReactionEmoteRoleHandler reactionEmoteRoleHandler;
 	public static LevelingHandler levelingHandler;
-	
+	public static TopMessageHandler topMessageHandler;
+
 	public static HashSet<Object> taskExecutors = new HashSet<Object>();
 	
 	
@@ -64,6 +58,7 @@ public class Bot extends ListenerAdapter {
 	                    //.addEventListeners(new MessageSecurity())
 	                    //.addEventListeners(reactionEmoteRoleHandler)
 	                    .addEventListeners(levelingHandler)
+						.addEventListeners(topMessageHandler)
 	                    .enableIntents(GatewayIntent.GUILD_MEMBERS)
 	                    .setMemberCachePolicy(MemberCachePolicy.ALL)
 	                    .build();
@@ -102,6 +97,7 @@ public class Bot extends ListenerAdapter {
 		 initCommands();
 		 //reactionEmoteRoleHandler = new ReactionEmoteRoleHandler();
 		 levelingHandler = new LevelingHandler();
+		 topMessageHandler = new TopMessageHandler();
 	 }
 	 
 	 @Deprecated
@@ -111,6 +107,7 @@ public class Bot extends ListenerAdapter {
 		 commandHandler.addCommand(new ReloadCommand("reload"));
 		 commandHandler.addCommand(new EXPCommand("xp"));
 		 commandHandler.addCommand(new WaitCommand("wait"));
+		 commandHandler.addCommand(new TopCommand("top"));
 	 }
 	 
 	 public static void createCommands() {

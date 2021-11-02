@@ -68,12 +68,12 @@ public class EXPCommand extends GenericCommand{
 		
 		Member member;
 		
-		System.out.println("Command params: " + commandParams);
+		//System.out.println("Command params: " + commandParams);
 		if (commandParams.startsWith("<@")) {
 			commandParams = commandParams.replace("<@", "");
 			commandParams = commandParams.replace("!", "");
 			commandParams = commandParams.replace(">", "");
-			System.out.println("user id " + commandParams);
+			//System.out.println("user id " + commandParams);
 			long id = Long.parseLong(commandParams);
 			member = e.getGuild().retrieveMemberById(id).complete();
 		} else {
@@ -153,7 +153,7 @@ public class EXPCommand extends GenericCommand{
 		
 		
 		
-		System.out.println(user.getInt("currentExp") + " " + user.getInt("expForCurrentLevel") + " " + user.getInt("currentExp"));
+		//System.out.println(user.getInt("currentExp") + " " + user.getInt("expForCurrentLevel") + " " + user.getInt("currentExp"));
 		
 		g.setFont(smallFont);
 		g.drawString(currentExp + " / " + nextExp, 270, 810);

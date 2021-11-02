@@ -127,65 +127,7 @@ public class LevelingHandler extends ListenerAdapter {
 	 */
 	public static void announcementUserLevelUp(JSONObject user) {
 		LevelRoleConfig config = Bot.getLevelRoleConfig();
-		Guild guild =  Bot.getGuild();
-		Member lvlupMember = guild.retrieveMemberById(user.getInt("userID")).complete();
-		int currentLvl = user.getInt("currentLevel");
-
-		Role levelfive = config.getAsRole("5");
-		Role levelten = config.getAsRole("10");
-		Role levelfifteen = config.getAsRole("15");
-		Role leveltwentyfive = config.getAsRole("25");
-		Role levelthirtyfive = config.getAsRole("35");
-		Role levelfifty = config.getAsRole("50");
-		Role levelseventyfive = config.getAsRole("75");
-		Role levelhundred = config.getAsRole("100");
-		Role levelhundredtwentyfive = config.getAsRole("125");
-		Role levelhundredfifty = config.getAsRole("150");
-		Role levelhundredseventyfive = config.getAsRole("175");
-		Role leveltwohundred = config.getAsRole("200");
-
-		if(currentLvl == 5){
-			Role games = config.getAsRole("GAMES");
-			Role aboutme = config.getAsRole("ABOUT_ME");
-			Role hobbies = config.getAsRole("HOBBIES");
-			lvlupMember.getRoles().add(games);
-			lvlupMember.getRoles().add(aboutme);
-			lvlupMember.getRoles().add(hobbies);
-			lvlupMember.getRoles().add(levelfive);
-		} else if(currentLvl == 10){
-			lvlupMember.getRoles().remove(levelfive);
-			lvlupMember.getRoles().add(levelten);
-		} else if(currentLvl == 15){
-			lvlupMember.getRoles().remove(levelten);
-			lvlupMember.getRoles().add(levelfifteen);
-		} else if(currentLvl == 25){
-			lvlupMember.getRoles().remove(levelfifteen);
-			lvlupMember.getRoles().add(leveltwentyfive);
-		} else if(currentLvl == 35){
-			lvlupMember.getRoles().remove(leveltwentyfive);
-			lvlupMember.getRoles().add(levelthirtyfive);
-		} else if(currentLvl == 50){
-			lvlupMember.getRoles().remove(levelthirtyfive);
-			lvlupMember.getRoles().add(levelfifty);
-		} else if(currentLvl == 75){
-			lvlupMember.getRoles().remove(levelfifty);
-			lvlupMember.getRoles().add(levelseventyfive);
-		} else if(currentLvl == 100){
-			lvlupMember.getRoles().remove(levelseventyfive);
-			lvlupMember.getRoles().add(levelhundred);
-		} else if(currentLvl == 125){
-			lvlupMember.getRoles().remove(levelhundred);
-			lvlupMember.getRoles().add(levelhundredtwentyfive);
-		} else if(currentLvl == 150){
-			lvlupMember.getRoles().remove(levelhundredtwentyfive);
-			lvlupMember.getRoles().add(levelhundredfifty);
-		} else if(currentLvl == 175){
-			lvlupMember.getRoles().remove(levelhundredfifty);
-			lvlupMember.getRoles().add(levelhundredseventyfive);
-		} else if(currentLvl == 200){
-			lvlupMember.getRoles().remove(levelhundredseventyfive);
-			lvlupMember.getRoles().add(leveltwohundred);
-		}
+		config.assignRole(user);
 
 	}
 }
