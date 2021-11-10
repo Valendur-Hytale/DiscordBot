@@ -4,21 +4,9 @@ import java.util.Date;
 import java.util.HashSet;
 import javax.security.auth.login.LoginException;
 
-import de.valendur.discordbot.commands.BirthdayCommand;
-import de.valendur.discordbot.commands.EXPCommand;
-import de.valendur.discordbot.commands.PingCommand;
-import de.valendur.discordbot.commands.ReloadCommand;
-import de.valendur.discordbot.commands.WaitCommand;
-import de.valendur.discordbot.configs.BaseConfig;
-import de.valendur.discordbot.configs.ConfigType;
-import de.valendur.discordbot.configs.LevelingConfig;
-import de.valendur.discordbot.configs.ReactionEmoteRoleConfig;
-import de.valendur.discordbot.configs.SecurityConfig;
-import de.valendur.discordbot.configs.TokenConfig;
-import de.valendur.discordbot.handlers.CommandHandler;
-import de.valendur.discordbot.handlers.ConfigHandler;
-import de.valendur.discordbot.handlers.LevelingHandler;
-import de.valendur.discordbot.handlers.ReactionEmoteRoleHandler;
+import de.valendur.discordbot.commands.*;
+import de.valendur.discordbot.configs.*;
+import de.valendur.discordbot.handlers.*;
 import de.valendur.discordbot.tasks.DailyBirthdayChecker;
 import de.valendur.discordbot.tasks.DailyLevelingResetTask;
 import de.valendur.discordbot.tasks.DailyWebsiteFixer;
@@ -48,7 +36,8 @@ public class Bot extends ListenerAdapter {
 	public static ConfigHandler configHandler;
 	public static ReactionEmoteRoleHandler reactionEmoteRoleHandler;
 	public static LevelingHandler levelingHandler;
-	
+	public static TopMessageHandler topMessageHandler;
+
 	public static HashSet<Object> taskExecutors = new HashSet<Object>();
 	
 	
@@ -67,8 +56,9 @@ public class Bot extends ListenerAdapter {
 	                    .addEventListeners(commandHandler)
 	                    .addEventListeners(new BirthdayCommand())
 	                    //.addEventListeners(new MessageSecurity())
-	                    .addEventListeners(reactionEmoteRoleHandler)
+	                    //.addEventListeners(reactionEmoteRoleHandler)
 	                    .addEventListeners(levelingHandler)
+						.addEventListeners(topMessageHandler)
 	                    .enableIntents(GatewayIntent.GUILD_MEMBERS)
 	                    .setMemberCachePolicy(MemberCachePolicy.ALL)
 	                    .build();
@@ -76,8 +66,7 @@ public class Bot extends ListenerAdapter {
 	            System.out.println("Erfolgreich gestartet !");
 
 	            
-	        }
-	        catch (LoginException e){
+	        } catch (LoginException e){
 
 	            e.printStackTrace();
 	        }
@@ -100,12 +89,15 @@ public class Bot extends ListenerAdapter {
 	 public static TokenConfig getTokenConfig() {
 		 return (TokenConfig) configHandler.getConfig(ConfigType.TOKEN_CONFIG);
 	 }
+
+	 public static LevelRoleConfig getLevelRoleConfig() {return (LevelRoleConfig) configHandler.getConfig(ConfigType.LEVEL_ROLE_CONFIG);}
 	 
 	 public static void initHandlers() {
 		 initConfigs();
 		 initCommands();
-		 reactionEmoteRoleHandler = new ReactionEmoteRoleHandler();
+		 //reactionEmoteRoleHandler = new ReactionEmoteRoleHandler();
 		 levelingHandler = new LevelingHandler();
+		 topMessageHandler = new TopMessageHandler();
 	 }
 	 
 	 @Deprecated
@@ -115,6 +107,7 @@ public class Bot extends ListenerAdapter {
 		 commandHandler.addCommand(new ReloadCommand("reload"));
 		 commandHandler.addCommand(new EXPCommand("xp"));
 		 commandHandler.addCommand(new WaitCommand("wait"));
+		 commandHandler.addCommand(new TopCommand("top"));
 	 }
 	 
 	 public static void createCommands() {
@@ -167,16 +160,18 @@ public class Bot extends ListenerAdapter {
 	        );*/
 
 	        // Send the new set of commands to discord, this will override any existing global commands with the new set provided here
+
 	        commands.queue();
 	 }
 	 
 	 public static void initConfigs() {
 		 configHandler = new ConfigHandler();
 		 configHandler.addConfig(new BaseConfig(ConfigType.BASE_CONFIG));
-		 configHandler.addConfig(new ReactionEmoteRoleConfig(ConfigType.REACTION_ROLE_CONFIG));
+		 //configHandler.addConfig(new ReactionEmoteRoleConfig(ConfigType.REACTION_ROLE_CONFIG));
 		 configHandler.addConfig(new LevelingConfig(ConfigType.LEVELING_CONFIG));
 		 configHandler.addConfig(new SecurityConfig(ConfigType.SECURITY_CONFIG));
 		 configHandler.addConfig(new TokenConfig(ConfigType.TOKEN_CONFIG));
+		 configHandler.addConfig(new LevelRoleConfig(ConfigType.LEVEL_ROLE_CONFIG));
 		 
 		 configHandler.load();
 	 }
@@ -203,7 +198,7 @@ public class Bot extends ListenerAdapter {
 	 
 	 
 	 public static void setupHandlers() {
-		 reactionEmoteRoleHandler.setup(getGuild());
+		 //reactionEmoteRoleHandler.setup(getGuild());
 		 levelingHandler.setup(getGuild());
 	 }
 	 

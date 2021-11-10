@@ -10,7 +10,6 @@ public class DailyLevelingResetTask extends GenericScheduledTask {
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
 		Bot.levelingHandler.setup(Bot.getGuild());
 	}
 	

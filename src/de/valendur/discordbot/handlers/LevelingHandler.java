@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import de.valendur.discordbot.Bot;
 import de.valendur.discordbot.Utils;
 import de.valendur.discordbot.configs.ConfigType;
+import de.valendur.discordbot.configs.LevelRoleConfig;
 import de.valendur.discordbot.configs.LevelingConfig;
 import de.valendur.discordbot.dbhandlers.DBLevelingHandler;
 import de.valendur.discordbot.levelling.LevelingUser;
@@ -15,10 +16,7 @@ import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberLeaveEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
@@ -123,9 +121,13 @@ public class LevelingHandler extends ListenerAdapter {
 		user.setVoiceState(inVoice);
 	}
 
+	/**
+	 * Temporarily Stores the Roles in here gets outsourced to a Config
+	 * @param user
+	 */
 	public static void announcementUserLevelUp(JSONObject user) {
-//		Bot2.getGuild().getTextChannelById(getConfig().LEVELING_ANNOUNCEMENT_CHANNEL)
-//			.sendMessage("Herzlichen Glückwunsch <@" + user.getString("userID") + ">! Du bist zu Level " + user.getString("currentLevel") + " aufgestiegen!")
-//			.queue();
+		LevelRoleConfig config = Bot.getLevelRoleConfig();
+		config.assignRole(user);
+
 	}
 }
