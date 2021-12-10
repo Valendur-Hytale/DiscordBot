@@ -69,5 +69,6 @@
 	<classpathentry kind="lib" path="lib/twitch4j-messaginginterface-1.5.0.jar"/>
 	<classpathentry kind="lib" path="lib/twitch4j-pubsub-1.5.0.jar"/>
 	<classpathentry kind="lib" path="lib/uuid-jvm-0.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/jsoup-1.14.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

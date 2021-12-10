@@ -6,6 +6,7 @@ import javax.security.auth.login.LoginException;
 
 import com.github.twitch4j.TwitchClient;
 
+import de.valendur.discordbot.commands.AddTeamCommand;
 import de.valendur.discordbot.commands.BirthdayCommand;
 import de.valendur.discordbot.commands.EXPCommand;
 import de.valendur.discordbot.commands.MeditateCommand;
@@ -26,6 +27,7 @@ import de.valendur.discordbot.handlers.TwitchHandler;
 import de.valendur.discordbot.tasks.DailyBirthdayChecker;
 import de.valendur.discordbot.tasks.DailyLevelingResetTask;
 import de.valendur.discordbot.tasks.DailyWebsiteFixer;
+import de.valendur.discordbot.tasks.PrimeLeagueCheckTask;
 import de.valendur.discordbot.tasks.VoiceCheckTask;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
@@ -69,10 +71,10 @@ public class Bot extends ListenerAdapter {
 	        	
 	            jda = JDABuilder.createDefault(getTokenConfig().BOT_TOKEN)
 	                    .addEventListeners(commandHandler)
-	                    .addEventListeners(new BirthdayCommand())
+	                    //.addEventListeners(new BirthdayCommand())
 	                    //.addEventListeners(new MessageSecurity())
-	                    .addEventListeners(reactionEmoteRoleHandler)
-	                    .addEventListeners(levelingHandler)
+	                    //.addEventListeners(reactionEmoteRoleHandler)
+	                    //.addEventListeners(levelingHandler)
 	                    .enableIntents(GatewayIntent.GUILD_MEMBERS)
 	                    .setMemberCachePolicy(MemberCachePolicy.ALL)
 	                    .build();
@@ -92,7 +94,7 @@ public class Bot extends ListenerAdapter {
 	        
 	        
 	        createCommands();
-	        setupHandlers(); //might fail so nothing afterwards, TODO improve this shit lol
+//	        setupHandlers(); //might fail so nothing afterwards, TODO improve this shit lol
 	       
 	    }
 	 
@@ -125,6 +127,7 @@ public class Bot extends ListenerAdapter {
 		 commandHandler.addCommand(new EXPCommand("xp"));
 		 commandHandler.addCommand(new WaitCommand("wait"));
 		 commandHandler.addCommand(new MeditateCommand("med"));
+		 commandHandler.addCommand(new AddTeamCommand("addTeam"));
 	 }
 	 
 	 public static void createCommands() {
@@ -203,12 +206,14 @@ public class Bot extends ListenerAdapter {
 		 final ScheduledTaskExecutor dailyBirthdayCheck = new ScheduledTaskExecutor(new DailyBirthdayChecker(0, 0, 0));
 		 
 		 final RepeatedTaskExecutor voiceCheck = new RepeatedTaskExecutor(new VoiceCheckTask(getBaseConfig().SCHEDULING_VOICE_CHECK));
+		 final RepeatedTaskExecutor primeCheck = new RepeatedTaskExecutor(new PrimeLeagueCheckTask(60));
 		 
 		 
-		 taskExecutors.add(dailyReset);
-		 taskExecutors.add(dailyWebsiteFix);
-		 taskExecutors.add(voiceCheck);
-		 taskExecutors.add(dailyBirthdayCheck);
+//		 taskExecutors.add(dailyReset);
+//		 taskExecutors.add(dailyWebsiteFix);
+//		 taskExecutors.add(voiceCheck);
+//		 taskExecutors.add(dailyBirthdayCheck);
+//		 taskExecutors.add(primeCheck);
 	 }
 	 
 	 
